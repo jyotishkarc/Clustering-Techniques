@@ -1,3 +1,5 @@
+## Author : Jyotishka Ray Choudhury
+
 GMM <- function(data, K){
    dm <- as.matrix(data)
    initial <- initial.clusters(dm, K)
