@@ -1,6 +1,6 @@
 ## Author : Jyotishka Ray Choudhury
 
-GMM <- function(data, K){
+GMM <- function(data, K){ ## Gaussian Mixture Models
    dm <- as.matrix(data)
    initial <- initial.clusters(dm, K)
    dm <- t(dm)
