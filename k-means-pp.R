@@ -11,10 +11,6 @@ km.pp <- function(data,k){
   exec.time <- toc()
   exec.time <- exec.time$toc - exec.time$tic
   return(list(final.cluster, exec.time, rowSums(final.Z), final.centroids))
-  
-#  print(KM[[1]])
-#  print(final.Z)
-#  print(KM)
 }
 
 
@@ -108,15 +104,16 @@ distance.sq <- function(x,y){
 
 
 ################ Unbalance Dataset
-if (FALSE) {
+if (TRUE) {
 
 W <- km.pp(t(unbalance) , 8)
+unb_gr <- as.numeric(as.matrix(unbalance_ground))
 
 library("clues")
-print(adjustedRand(W[[1]],unbalance_ground))
+print(adjustedRand(W[[1]],unb_gr))
 
 library("aricode")
-print(NMI(W[[1]] , unbalance_ground))
+print(NMI(W[[1]] , unb_gr))
 
 library("ggplot2")
 original.plot <- ggplot(unbalance , aes(V1,V2)) + 
