@@ -1,0 +1,108 @@
+## Author : SUPRATIK BASU
+
+normal_density=function(mu,sigma,x)
+{
+  if(length(x)==1)
+    f=(1/(sqrt(2*pi*sigma)))*exp(-(x-mu)^2/(2*sigma))
+  else
+    f=(1/(sqrt(abs(det(sigma)))*(sqrt(2*pi))^(length(mu))))*exp(-(1/2)*(x-mu)%*%solve(sigma)%*%(x-mu))
+  return(as.numeric(f))
+}
+
+GMM=function(X,Z,M)
+{
+  N=ncol(X)
+  K=ncol(M)
+  m=nrow(X)
+  fold=0
+  i=1
+  O=matrix(0,m,m)
+  sigma=list()
+  j=1
+  while(j<=K)
+  {
+    sigma[[j]]=O
+    j=j+1
+  }
+  p=rep(0,K)
+  while(i<=100)
+  {
+    M=matrix(0,m,K)    
+    j=1
+    while(j<=K)
+    {
+      n=1
+      while(n<=N)
+      {
+        M[,j]=M[,j]+Z[j,n]*X[,n]
+        n=n+1
+      }
+      M[,j]=M[,j]/sum(Z[j,])
+      j=j+1
+    }
+    j=1
+    while(j<=K)
+    {
+      sigma[[j]]=O
+      j=j+1
+    }
+    j=1
+    while(j<=K)
+    {
+      n=1
+      while(n<=N)
+      {
+        sigma[[j]]=sigma[[j]]+Z[j,n]*as.matrix(X[,n]-M[,j])%*%t(as.matrix(X[,n]-M[,j]))
+        n=n+1
+      }
+      sigma[[j]]=sigma[[j]]/sum(Z[j,])
+      j=j+1
+    }
+    j=1
+    while(j<=K)
+    {
+      p[j]=sum(Z[j,])/N
+      j=j+1
+    }
+    j=1
+    while(j<=K)
+    {
+      n=1
+      while(n<=N)
+      {
+        Z[j,n]=p[j]*normal_density(M[,j],sigma[[j]],X[,n])
+        n=n+1
+        
+      }
+      j=j+1
+    }
+    n=1
+    while(n<=N)
+    {
+      Z[,n]=Z[,n]/sum(Z[,n])
+      n=n+1
+    }
+    fnew=0
+    n=1
+    while(n<=N)
+    {
+      j=1
+      sum=0
+      while(j<=K)
+      {
+        sum=sum+p[j]*normal_density(M[,j],sigma[[j]],X[,n])
+        j=j+1
+      }
+      fnew=fnew+log(sum)
+      n=n+1
+    }
+    if(abs(fold-fnew)<5*10^(-2))
+      break
+    fold=fnew
+    i=i+1
+    print(i)
+  }
+  
+  
+  return(list("z"=Z,"m"=M,"s"=sigma))
+}

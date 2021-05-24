@@ -1,4 +1,4 @@
-## Author : Jyotishka Ray Choudhury
+## Author : JYOTISHKA RAY CHOUDHURY
 
 GMM <- function(data, K){
    dm <- as.matrix(data)
@@ -10,7 +10,7 @@ GMM <- function(data, K){
    Q <- E[[2]]
    difference <- 1
    log.likelihood <- c(Q)
-   while (difference > 0.06) {
+   while (difference > 0.2) {
       M <- M.step(dm, K, E)
       Q <- M[[4]]
       
@@ -112,7 +112,6 @@ initial.clusters <- function(data,K){
 
 
 
-
 ########## Expectation Step
 
 E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
@@ -152,7 +151,6 @@ E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
    result <- list(gamma.prob , C , mu.matrix , Sigma.list, pi.prob)
    return(result)
 }
-
 
 
 
@@ -217,12 +215,26 @@ normal.density <- function(vec, mu, Sigma){
 
 
 
+########### Plotting the Ellipses
 
-
-
-
-
-
+if(FALSE){
+   data <-                                            # DATASET NAME
+   data_ground <- as.numeric(as.matrix())             # GROUND TRUTH
+   
+   RES <- GMM(t(data), K)                             # GMM Implementation
+   
+   plot(data[,1], data[,2], col="black", pch=20)      # Plot original dataset
+   
+   i=1
+   while(i <= K)
+   {
+      mixtools::ellipse(RES[[3]][,i], RES[[4]][[i]], 0.01, col="blue", lwd = 2)
+      i=i+1
+   }
+   
+   ARI_cluster <- fclust::ARI.F(data_ground, RES[[1]])
+   print(ARI_cluster)
+}
 
 
 
