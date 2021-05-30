@@ -1,17 +1,30 @@
-library(tictoc)
+## Author : JYOTISHKA RAY CHOUDHURY
 
-km.pp <- function(data,k){
-  tic()
+km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
+  tictoc::tic()
   data <- as.matrix(data)
-  initial.centroids <- initial(data,k)
-  KM.PP <- km(data,k,initial.centroids)
+  KM.PP <- km(data, k, initial(data,k))
   final.Z <- KM.PP[[2]]
   final.centroids <- KM.PP[[4]]
   final.cluster <- which(final.Z == 1) - k * 0:(ncol(data)-1)
-  exec.time <- toc()
+  exec.time <- tictoc::toc()
   exec.time <- exec.time$toc - exec.time$tic
-  return(list(final.cluster, exec.time, rowSums(final.Z), final.centroids))
+  
+  if(is.null(ground) == FALSE){
+    ground <- as.numeric(as.matrix(ground))
+    
+    ARI.clus <- clues::adjustedRand(final.cluster, ground, 
+                                    randMethod = "Rand")
+    NMI.clus <- aricode::NMI(final.cluster, ground)
+    
+    cat("Runtime =",exec.time,"\nARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
+    return(list(final.cluster, exec.time, final.centroids,
+                ARI.clus, NMI.clus))
+  }
+  
+  return(list(final.cluster, exec.time, final.centroids))
 }
+
 
 
 ###############
@@ -104,16 +117,7 @@ distance.sq <- function(x,y){
 
 
 ################ Unbalance Dataset
-if (TRUE) {
-
-W <- km.pp(t(unbalance) , 8)
-unb_gr <- as.numeric(as.matrix(unbalance_ground))
-
-library("clues")
-print(adjustedRand(W[[1]],unb_gr))
-
-library("aricode")
-print(NMI(W[[1]] , unb_gr))
+if (FALSE) {
 
 library("ggplot2")
 original.plot <- ggplot(unbalance , aes(V1,V2)) + 
