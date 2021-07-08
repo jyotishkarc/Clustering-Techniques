@@ -2,7 +2,7 @@
 
 km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
   tictoc::tic()
-  data <- as.matrix(data)
+  data <- t(as.matrix(data))
   KM.PP <- km(data, k, initial(data,k))
   final.Z <- KM.PP[[2]]
   final.centroids <- KM.PP[[4]]
@@ -116,25 +116,27 @@ distance.sq <- function(x,y){
 }
 
 
+
+
 ################ Unbalance Dataset
-if (FALSE) {
-
-library("ggplot2")
-original.plot <- ggplot(unbalance , aes(V1,V2)) + 
-  geom_point(size = 2) + theme(legend.position = "none")
-
-print(original.plot)
-
-library("grDevices")
-fg <- c()
-for (k in 1:6500) {
-  fg[k] <- rainbow(8)[W[[1]][k]]
+if(FALSE) {
+  
+  library("ggplot2")
+  original.plot <- ggplot(unbalance , aes(V1,V2)) + 
+    geom_point(size = 2) + theme(legend.position = "none")
+  
+  print(original.plot)
+  
+  fg <- c()
+  for (k in 1:6500) {
+    fg[k] <- grDevices::rainbow(8)[W[[1]][k]]
+  }
+  
+  km.pp.plot <- ggplot(rbind(unbalance , t(W[[4]])) , 
+                       aes(V1,V2 , color = c(fg , rep("#000000",8)))) +
+    geom_point(size = 2) + theme(legend.position = "none")
+  
+  print(km.pp.plot)
+  
 }
 
-km.pp.plot <- ggplot(rbind(unbalance , t(W[[4]])) , 
-                     aes(V1,V2 , color = c(fg , rep("#000000",8)))) +
-  geom_point(size = 2) + theme(legend.position = "none")
-
-print(km.pp.plot)
-
-}

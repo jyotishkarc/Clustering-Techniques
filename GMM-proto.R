@@ -1,8 +1,8 @@
 ## Author : JYOTISHKA RAY CHOUDHURY
 
-GMM <- function(data, K){
+GMM.proto <- function(data, K){
    dm <- as.matrix(data)
-   initial <- initial.clusters(dm, K)
+   initial <- initial.clusters.proto(dm, K)
    dm <- t(dm)
    N <- nrow(dm)
    
@@ -43,7 +43,6 @@ GMM <- function(data, K){
    }
    
    final <- list(gamma.prob, pi.prob, mu.matrix, Sigma.list, log.likelihood)
-   
    return(final)
 }
 
@@ -51,14 +50,76 @@ GMM <- function(data, K){
 
 ########## Initialization
 
-initial.clusters <- function(data,K){
+initial.clusters.proto <- function(data, K){
    dm <- as.matrix(data)
-   d <- nrow(dm)
+   n <- nrow(dm)
+   d <- ncol(dm)
+   
+   km.pp.result <- km.pp.proto(dm, K)
+   Z <- km.pp.result[[4]]
+   centroid.mat <- km.pp.result[[3]]
+   
+   initial.pi.prob <- rowSums(Z)/sum(Z)
+   
+   Sigma.list <- list()
+   
+   for (i in 1:K) {
+      mark <- which(Z[i,] == 1)
+      mat <- as.matrix(dm[mark,]) - matrix(colMeans(dm[mark,]), byrow = TRUE, 
+                                           nrow = length(mark), ncol = d)
+      J <- 0
+      
+      for (h in 1:length(mark)) {
+         J <- J + as.matrix(mat[h,]) %*% t(mat[h,])
+      }
+      J <- J / length(mark)
+      
+      Sigma.list[[i]] <- J
+   }
+   
+   initial.parameters <- list(initial.pi.prob, centroid.mat, Sigma.list)
+   return(initial.parameters)
+}
+
+
+
+
+km.pp.proto <- function(data, k, ground = NULL){ # Input transposed data matrix
+   tictoc::tic()
+   data <- t(as.matrix(data))
+   KM.PP <- km(data, k, initial.points(data,k))
+   final.Z <- KM.PP[[2]]
+   final.centroids <- KM.PP[[4]]
+   final.cluster <- which(final.Z == 1) - k * 0:(ncol(data)-1)
+   exec.time <- tictoc::toc()
+   exec.time <- exec.time$toc - exec.time$tic
+   
+   if(is.null(ground) == FALSE){
+      ground <- as.numeric(as.matrix(ground))
+      
+      ARI.clus <- clues::adjustedRand(final.cluster, ground, 
+                                      randMethod = "Rand")
+      NMI.clus <- aricode::NMI(final.cluster, ground)
+      
+      cat("Runtime =",exec.time,"\nARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
+      return(list(final.cluster, exec.time, final.centroids,
+                  ARI.clus, NMI.clus))
+   }
+   
+   return(list(final.cluster, exec.time, final.centroids, final.Z))
+}
+
+
+
+###############
+initial.points <- function(data,k){
+   dm <- as.matrix(data)
+   m <- nrow(dm)
    n <- ncol(dm)
-   centroid.mat <- matrix(0,nrow = d,ncol = K)
+   centroid.mat <- matrix(0,nrow = m,ncol = k)
    centroid.mat[,1] <- dm[,sample(1:n , 1)]
    
-   for (h in 2:K) {
+   for (h in 2:k) {
       dist.mat <- matrix(0 , nrow = n , ncol = h-1)
       
       for (i in 1:n) {
@@ -77,42 +138,65 @@ initial.clusters <- function(data,K){
       centroid.mat[,h] <- dm[,ss]
    }
    
-   Z <- matrix(0, nrow = K , ncol = n)
+   return(centroid.mat)
+}
+
+
+###############
+km <- function(data , k , initial){
+   dm <- as.matrix(data)
+   m <- nrow(dm)
+   n <- ncol(dm)
+   centroid <- initial
+   Z <- matrix(0, nrow = k , ncol = n)
    
    for (i in 1:n) {
-      dist.mat <- rep(0,K)
-      for (j in 1:K) {
-         dist.mat[j] <-  distance.sq(dm[,i] , centroid.mat[,j])
+      dist.mat <- rep(0,k)
+      for (j in 1:k) {
+         dist.mat[j] <-  distance.sq(dm[,i] , centroid[,j])
       }
       Z[which.min(dist.mat) , i] <- 1
    }
    
-   initial.pi.prob <- rowSums(Z)/sum(Z)
-   
-   Sigma.list <- list()
-   
-   for (i in 1:K) {
-      mark <- which(Z[i,] == 1)
-      avg <- as.matrix(rowMeans(dm[,mark]))
-      mat <- as.matrix(dm[,mark]) - matrix(rep(avg,length(mark)), 
-                                           ncol = length(mark))
-      J <- 0
-      
-      for (h in 1:length(mark)) {
-         J <- J + as.matrix(mat[,h]) %*% t(mat[,h])
-      }
-      J <- J / length(mark)
-      
-      Sigma.list[[i]] <- J
+   new.centroid <- matrix(0, nrow = m , ncol = k)
+   for (i in 1:k) {
+      d <- which(Z[i,]==1)
+      qq <- as.matrix(dm[,d])
+      new.centroid[,i] <- rowMeans(qq)
    }
    
-   initial.parameters <- list(initial.pi.prob, centroid.mat, Sigma.list)
-   return(initial.parameters)
+   count <- 0
+   tolerance <- 1E-5
+   while (distance.sq(centroid , new.centroid) > tolerance) {
+      centroid <- new.centroid
+      
+      for (i in 1:n) {
+         dist.mat <- rep(0,k)
+         for (j in 1:k) {
+            dist.mat[j] <- distance.sq(dm[,i] , centroid[,j])
+         }
+         
+         Z[,i] <- rep(0,k)
+         Z[which.min(dist.mat) , i] <- 1
+      }
+      
+      for (i in 1:k) {
+         d <- which(Z[i,]==1)
+         qq <- as.matrix(dm[,d])
+         new.centroid[,i] <- rowMeans(qq)
+      }
+      
+      count <- count + 1
+   }
+   
+   result <- list(rowSums(Z), Z, count, new.centroid)
+   return(result)
 }
 
 
 
-########## Expectation Step
+
+#################### Expectation Step
 
 E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
    dm <- as.matrix(data)
@@ -124,12 +208,12 @@ E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
       S <- 0
       for (j in 1:K) {
          S <- S + pi.prob[j] * normal.density(dm[i,], mu.matrix[,j], 
-                                           Sigma.list[[j]])
+                                              Sigma.list[[j]])
       }
       
       for (j in 1:K) {
          gamma.prob[i,j] <- pi.prob[j] * normal.density(dm[i,], mu.matrix[,j],
-                                                       Sigma.list[[j]]) / S
+                                                        Sigma.list[[j]]) / S
       }
       
    }
@@ -138,9 +222,6 @@ E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
    for (i in 1:N) {
       Q <- 0
       for (j in 1:K) {
-#         Q <- Q + log((pi.prob[j] * 
-#      normal.density(dm[i,], mu.matrix[,j], Sigma.list[[j]]))^gamma.prob[i,j])
-      
          Q <- Q + pi.prob[j] * 
             normal.density(dm[i,], mu.matrix[,j], Sigma.list[[j]])
       }
@@ -154,7 +235,7 @@ E.step <- function(data, K, pi.prob, mu.matrix, Sigma.list){
 
 
 
-########## Maximization Step
+#################### Maximization Step
 
 M.step <- function(data, K, res){
    dm <- as.matrix(data)
@@ -192,7 +273,7 @@ M.step <- function(data, K, res){
 
 
 
-################ Euclidean Norm
+#################### Euclidean Norm
 
 distance.sq <- function(x,y){
    return(sum((x-y)*(x-y)))
@@ -200,7 +281,7 @@ distance.sq <- function(x,y){
 
 
 
-########## Multivariate Normal Density Function
+#################### Multivariate Normal Density Function
 
 normal.density <- function(vec, mu, Sigma){
    D <- length(vec)
@@ -215,7 +296,8 @@ normal.density <- function(vec, mu, Sigma){
 
 
 
-########### Plotting the Ellipses
+
+##################### Plotting the Ellipses
 
 if(FALSE){
    data <-                                            # DATASET NAME
@@ -235,6 +317,5 @@ if(FALSE){
    ARI_cluster <- fclust::ARI.F(data_ground, RES[[1]])
    print(ARI_cluster)
 }
-
 
 
