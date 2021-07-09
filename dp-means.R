@@ -6,7 +6,7 @@ DP.means <- function(X, lambda, epsilon){
    mu[1,] <- t(colMeans(X))
    Z <- rep(1, n)
    
-   fold <- sum((X - matrix(rep(mu[1,], n), n, ncol(X), byrow = TRUE))^2) + lambda
+   obj.old <- sum((X - matrix(rep(mu[1,], n), n, ncol(X), byrow = TRUE))^2) + lambda
    
    while(TRUE)
    {
@@ -30,9 +30,9 @@ DP.means <- function(X, lambda, epsilon){
       
       for (j in 1:C) {R[Z==j,] <- mu[j,]}
       
-      f.new <- sum((X-R)^2) + lambda * C
-      if((f.new - f.old)^2 < epsilon) {break}
-      f.old <- f.new
+      obj.new <- sum((X-R)^2) + lambda * C
+      if((obj.new - obj.old)^2 < epsilon) {break}
+      obj.old <- obj.new
    }
    
    return(list("Z" = Z , "mu" = mu))
