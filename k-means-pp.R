@@ -14,7 +14,7 @@ km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
     ground <- as.numeric(as.matrix(ground))
     
     ARI.clus <- clues::adjustedRand(final.cluster, ground, 
-                                    randMethod = "Rand")
+                                    randMethod = "HA")
     NMI.clus <- aricode::NMI(final.cluster, ground)
     
     cat("Runtime =",exec.time,"\nARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
