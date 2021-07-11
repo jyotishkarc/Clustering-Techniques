@@ -2,12 +2,13 @@
 DP.means <- function(X, lambda, epsilon){
    
    n <- nrow(X)
+   d <- ncol(X)
    C <- 1
-   mu <- matrix(0, 1, ncol(X))
+   mu <- matrix(0, 1, d)
    mu[1,] <- t(colMeans(X))
    Z <- rep(1, n)
    
-   obj.old <- sum((X - matrix(rep(mu[1,], n), n, ncol(X), byrow = TRUE))^2) + lambda
+   obj.old <- sum((X - matrix(rep(mu[1,], n), n, d, byrow = TRUE))^2) + lambda
    
    count <- 0
    
@@ -32,7 +33,7 @@ DP.means <- function(X, lambda, epsilon){
       print(C)
       count <- count + 1
       
-      R <- matrix(0, n, ncol(X))
+      R <- matrix(0, n, d)
       for (j in 1:n) {R[j,] <- unlist(mu[Z[j],])}
       
       obj.new <- sum((X-R)^2) + lambda * C
