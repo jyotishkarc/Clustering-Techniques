@@ -1,5 +1,5 @@
 
-DP.means.proto <- function(X, lambda, ground = NULL, epsilon = 1e-6){
+DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
    
    n <- nrow(X)
    d <- ncol(X)
