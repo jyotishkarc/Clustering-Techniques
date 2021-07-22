@@ -3,7 +3,7 @@ dphi=function(u,v)
   return(sum(u*log(u/v,2)-log(exp(1),2)*(u-v)))
 }
 
-DP.means.KL <- function(X, lambda, epsilon){
+DP.means.KL <- function(X, lambda, ground = NULL, epsilon = 1e-6){
   
   n <- nrow(X)
   C <- 1
@@ -60,7 +60,15 @@ DP.means.KL <- function(X, lambda, epsilon){
     obj.old <- obj.new
   }
   
-  return(list("Z" = Z , "mu" = mu, 
-              "Number-of-Clusters" = C, "Iterations" = count))
+  if(is.null(ground) == FALSE){
+    
+    return(list("Z" = Z , "Number-of-Clusters" = C,
+                "No. of Iterations" = count,
+                "ARI" = aricode::ARI(Z, ground), 
+                "NMI" = aricode::NMI(Z, ground)))
+  }
+  
+  return(list("Z" = Z , "mu" = mu, "Number-of-Clusters" = C, 
+              "No. of Iterations" = count))
 }
 
