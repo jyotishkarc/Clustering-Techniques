@@ -289,7 +289,7 @@ normal.density <- function(vec, mu, Sigma){
    mu <- as.matrix(mu)
    Sigma <- as.matrix(Sigma)
    
-   f <- exp(-1/2 * t(vec - mu) %*% solve(Sigma) %*% (vec - mu)) /
+   f <- exp(-1/2 * (vec - mu) %*% solve(Sigma) %*% (vec - mu)) /
       sqrt((2 * pi)^D * det(Sigma))
    return(as.numeric(f))
 }
