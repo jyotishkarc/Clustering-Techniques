@@ -75,7 +75,7 @@ dp.soft <- function(X, f, lambda, dphi, epsilon = 1e-3){
 #    else
 #       return(u*log(u/v)+(N-u)*log((N-u)/(N-v)))
 # }
-# ############### Binomial
+#
 # f <- function(u,v)
 # {
 #    return(choose(N,u)*((v/N)^u)*((N-v)/N)^(N-u))
@@ -87,11 +87,11 @@ dphi <- function(u,v)
    return(((u-v)^2)/2)
 }
 
-############### Gaussian
 f <- function(u,v)
 {
    return(exp(-((u-v)^2)/2)/sqrt(2*pi))
 }
+
 
 ###############
 bregman.soft.clus <- function(X, dphi, k, mu, prob, f, epsilon = 10^(-2)){
@@ -104,6 +104,7 @@ bregman.soft.clus <- function(X, dphi, k, mu, prob, f, epsilon = 10^(-2)){
          c <- prob * apply(mu, 1, function(vec) exp(-dphi(X[i,], vec)))
          Z[i,] <- c / sum(c)
       }
+   
       #### M-Step
       prob <- colMeans(Z)
       for (h in 1:k) {
