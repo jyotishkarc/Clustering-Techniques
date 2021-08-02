@@ -1,25 +1,18 @@
 ## Author : JYOTISHKA RAY CHOUDHURY
 
 km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
-#  tictoc::tic()
+  
   data <- t(as.matrix(data))
   KM.PP <- km(data, k, initial(data,k))
   final.Z <- KM.PP[[2]]
   final.centroids <- KM.PP[[4]]
   final.cluster <- which(final.Z == 1) - k * 0:(ncol(data)-1)
-#  exec.time <- tictoc::toc()
-#  exec.time <- exec.time$toc - exec.time$tic
   
   if(is.null(ground) == FALSE){
     ground <- as.numeric(as.matrix(ground))
     
-    ARI.clus <- clues::adjustedRand(final.cluster, ground, 
-                                    randMethod = "HA")
+    ARI.clus <- aricode::ARI(final.cluster, ground)
     NMI.clus <- aricode::NMI(final.cluster, ground)
-    
-    # cat("Runtime =",exec.time,"\nARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
-    # return(list(final.cluster, exec.time, final.centroids,
-    #             ARI.clus, NMI.clus))
     
     cat("ARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
     return(list(final.cluster, final.centroids,
