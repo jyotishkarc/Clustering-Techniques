@@ -1,4 +1,4 @@
-km <- function(data , k , initial, tolerance = 1e-6){
+kernel.km <- function(data , k , initial, tolerance = 1e-6){
    X <- as.matrix(data)
    n <- nrow(X)
    d <- ncol(X)
@@ -54,7 +54,7 @@ km <- function(data , k , initial, tolerance = 1e-6){
    
    cluster.asg.vector <- apply(Z, 1, function(val) which(val == 1))
    
-   result <- list(cluster.asg.vector, colSums(Z), count, new.centroid)
+   result <- list(colSums(Z), cluster.asg.vector, count, new.centroid)
    return(result)
 }
 
