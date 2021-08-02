@@ -31,6 +31,7 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
       }
       
       count <- count + 1
+      print(count)
       
       R <- matrix(0, n, d)
       for (j in 1:n) {R[j,] <- unlist(mu[Z[j],])}
@@ -41,7 +42,35 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
    }
    
    
+   ############ 2D plot
+   if(ncol(X) == 2){
+      print("HELLO")
+      library(ggplot2)   
+      original.plot <- ggplot(unbalance , aes(V1,V2)) + 
+         geom_point(size = 2) + theme(legend.position = "none")
+      
+      print(original.plot)
+      
+      fg <- c()
+      for (k in 1:nrow(X)) {
+         fg[k] <- grDevices::rainbow(length(unique(Z)))[Z[k]]
+      }
+      
+      print(length(unique(Z)) + 40)
+      
+      original.plot <- ggplot(X , aes(V1,V2)) + 
+         geom_point(size = 2) + theme(legend.position = "none")
+      
+      dpm.plot <- ggplot(X , aes(V1,V2 , color = fg)) +
+                  geom_point(size = 2) + theme(legend.position = "none")
+      
+      print(original.plot)
+      print(dpm.plot)
+   }
+   
+   
    if(is.null(ground) == FALSE){
+      print("Done")
       
       return(list("Z" = Z , "Number-of-Clusters" = C,
                   "No. of Iterations" = count,
@@ -49,6 +78,8 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
                   "NMI" = aricode::NMI(Z, ground)))
    }
    
+   print("Done")
+
    return(list("Z" = Z , "mu" = mu, "Number-of-Clusters" = C, 
                "No. of Iterations" = count))
 }
