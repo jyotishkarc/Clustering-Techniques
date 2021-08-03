@@ -45,26 +45,20 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
    ############ 2D plot
    if(ncol(X) == 2){
       print("HELLO")
-      library(ggplot2)   
-      original.plot <- ggplot(unbalance , aes(V1,V2)) + 
-         geom_point(size = 2) + theme(legend.position = "none")
       
-      print(original.plot)
+      # original.plot <- ggplot(X , aes(V1,V2)) + 
+      #    geom_point(size = 2) + theme(legend.position = "none")
+      # 
+      # print(original.plot)
       
       fg <- c()
       for (k in 1:nrow(X)) {
          fg[k] <- grDevices::rainbow(length(unique(Z)))[Z[k]]
       }
       
-      print(length(unique(Z)) + 40)
-      
-      original.plot <- ggplot(X , aes(V1,V2)) + 
-         geom_point(size = 2) + theme(legend.position = "none")
-      
       dpm.plot <- ggplot(X , aes(V1,V2 , color = fg)) +
                   geom_point(size = 2) + theme(legend.position = "none")
       
-      print(original.plot)
       print(dpm.plot)
    }
    

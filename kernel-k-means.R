@@ -54,7 +54,7 @@ kernel.km <- function(data , k , initial, tolerance = 1e-6){
    
    cluster.asg.vector <- apply(Z, 1, function(val) which(val == 1))
    
-   result <- list(colSums(Z), cluster.asg.vector, count, new.centroid)
+   result <- list(cluster.asg.vector, colSums(Z), count, new.centroid)
    return(result)
 }
 
@@ -63,3 +63,6 @@ kernel.km <- function(data , k , initial, tolerance = 1e-6){
 distance.sq <- function(x,y){
    return(sum((x-y)*(x-y)))
 }
+
+
+################
