@@ -38,6 +38,7 @@ dp.soft.multi <- function(X, lambda, epsilon = 1e-3){
             indicator <- indicator + 1
             mu <- matrix(c(as.numeric(t(mu)), X[i,]), C, d, byrow = TRUE)
             hard.Z[i] <- C
+            Sigma[[]]
          }
          
           if(i %% 500 == 0) { print(i) }
