@@ -107,6 +107,7 @@ bregman.soft.clus <- function(X, dphi, k, mu, prob, f, epsilon = 10^(-2)){
    
       #### M-Step
       prob <- colMeans(Z)
+      
       for (h in 1:k) {
          mu[h,] <- t(Z[,h]) %*% X / sum(Z[,h])
       }
