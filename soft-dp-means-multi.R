@@ -4,7 +4,7 @@ dp.soft.multi <- function(X, lambda, epsilon = 1e-3){
    n <- nrow(X)
    d <- ncol(X)
    mu <- t(colMeans(X))
-   Sigma <- (t(X) - colMeans(X)) %*% t(t(X) - colMeans(X))/n
+   Sigma <- (t(X) - colMeans(X)) %*% t(t(X) - colMeans(X))/n # Sample Covariance Matrix
    Sigma <- list(Sigma)
    
    print(Sigma)
@@ -41,7 +41,7 @@ dp.soft.multi <- function(X, lambda, epsilon = 1e-3){
             Sigma[[]]
          }
          
-          if(i %% 500 == 0) { print(i) }
+         # if(i %% 500 == 0) { print(i) }
       }
       
       
