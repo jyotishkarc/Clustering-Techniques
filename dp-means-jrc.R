@@ -1,5 +1,5 @@
 
-DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
+DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-3){
    
    n <- nrow(X)
    d <- ncol(X)
@@ -27,7 +27,12 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-6){
          
          else {Z[i] <- which.min(dist.vec)}
          
-         for(j in 1:C) {mu[j,] <- colMeans(X[Z==j,])}
+         for(j in 1:C) {
+            if (length(which(Z == j)) > 1) {
+               mu[j,] <- colMeans(X[which(Z==j), ])
+            }
+            else {mu[j,] <- X[which(Z==j), ]}
+         }
       }
       
       count <- count + 1

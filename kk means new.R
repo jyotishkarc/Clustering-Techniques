@@ -1,15 +1,15 @@
-kernel.km <- function(X, C, sigma, initial, tolerance=1e-07)
+kernel.km <- function(X, C, sigma, initial, ground = NULL, tolerance=1e-07)
 {
+  X <- as.matrix(X)
   N <- nrow(X)
   d <- ncol(X)
-  centroid <- initial
+  centroid <- as.matrix(initial)
   Z <- matrix(0, N, C)
   kernel <- matrix(0, N, N)
   for(i in 1:N)
   {
     for(j in 1:N){
-    kernel[i,j] <- sigma*sqrt(2*pi)* dmvnorm(X[i,],X[j,],sigma^2 * diag(ncol(X)))}
-  
+    kernel[i,j] <- exp(-sum((X[i,]-X[j,])^2)/(2*sigma^2))}
    }
   
   print("HI")
@@ -59,12 +59,13 @@ kernel.km <- function(X, C, sigma, initial, tolerance=1e-07)
     Z <- new.Z
     obj.old <- obj.new
     t <- t+1
-    print(t)
   }
+  
   asg.vector <- rep(0, N)
   for(i in 1:C)
     asg.vector <- asg.vector + i*Z[,i]
-  if(d==2)
+  
+  if(FALSE)
   {
   X=as.data.frame(X)
   original.plot <- ggplot(X , aes(V1,V2)) +  
@@ -85,6 +86,57 @@ kernel.km <- function(X, C, sigma, initial, tolerance=1e-07)
   
   print(original.plot) 
   print(dpm.plot)
+  }
+  
+  ground <- as.numeric(ground)
+  
+  ARI.clus <- aricode::ARI(asg.vector, ground)
+  NMI.clus <- aricode::NMI(asg.vector, ground)
+  
+  print(ARI.clus)
+  print(NMI.clus)
+  
+  return(list("Z"=Z, "vec"=asg.vector, "count"=t, "ARI"=ARI.clus, "NMI"=NMI.clus))
+  
+  # return(list("Z"=Z, "vec"=asg.vector, "count"=t))
 }
-  return(list("Z"=Z, "vec"=asg.vector, "count"=t))
-}
+
+# bisection <- function(fun, left, right)
+# {
+#   t <- 0
+#   while(t <= 500)
+#   {
+#     med <- (left + right) / 2
+#     if(fun(med) == 0)
+#       return(med)
+#     else if (fun(med) > 0)
+#       right <- med
+#     else 
+#       left <- med
+#     t <- t+1
+#   }
+#   return(med)
+# }
+
+
+# centroid.init <- function(data, gt, C, sigma)
+# {
+#   N <- nrow(data)
+#   d <- ncol(data)
+#   centroid <- matrix(0, C, d)
+#   for(i in 1:C)
+#   {
+#     vec <- which(gt == i)
+#     mat <- matrix(0, length(vec), d)
+#     for(j in 1:length(vec))
+#     {
+#       mat[j,] <- data[vec[j],] / (sigma * exp(sum((data[vec[j],])^2)/(2 * sigma^2)))
+#     }
+#     temp <- colMeans(mat)
+#     print(temp)
+#     phi.norm <- uniroot(function(y) y / exp(y^2 / 2) - sqrt(sum(temp^2)), c(1,10000))
+#     phi.norm <- phi.norm$root
+#     centroid[i,] <- temp * sigma * exp(phi.norm ^2 /2)
+#   }
+#   return(centroid)
+# }
