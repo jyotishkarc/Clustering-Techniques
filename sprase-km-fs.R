@@ -36,8 +36,6 @@ sparse.km <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3){
          Z[i] <- which.min(sapply(1:k, function(val) asg.func(X,mu,i,val,L,notL)))
       }
       
-      #print(Z)
-      
       for (j in 1:k) {
          new.mu[j,] <- colMeans(X[which(Z==j),])
       }
