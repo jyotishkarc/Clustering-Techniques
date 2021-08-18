@@ -25,16 +25,12 @@ sparse.km <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3){
       for (j in 1:k) {
          mu[j,] <- colMeans(X[which(Z==j),])
       }
-      # print(mu)
       
       ranks <- matrix(sapply(1:k, function(val) length(which(Z==val))), 1, k) %*% mu^2
       ranking <- d - rank(ranks)
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)
-      
-      # print(L)
-      # print(notL)
       
       for (i in 1:n) {
          Z[i] <- which.min(sapply(1:k, function(val) asg.func(X,mu,i,val,L,notL)))
