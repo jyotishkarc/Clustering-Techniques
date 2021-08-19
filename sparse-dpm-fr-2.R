@@ -1,3 +1,5 @@
+## Author : SUPRATIK BASU
+
 sparse.dp.fr <- function(X, s, lambda, tolerance = 1e-07)
 {
   N <- nrow(X)
