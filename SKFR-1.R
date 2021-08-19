@@ -1,5 +1,6 @@
+## Author : JYOTISHKA RAY CHOUDHURY
 
-sparse.km <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3){
+sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3){
    
    X <- as.matrix(X)
    n <- nrow(X)
