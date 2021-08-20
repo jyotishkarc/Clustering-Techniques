@@ -18,9 +18,21 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       obj.new <- lambda * C
       
       for (j in 1:C) {
-         print(dim(X[which(Z==j),]))
-         mu[j,] <- colMeans(X[which(Z==j),])
+         if(length(which(Z==j))==0)
+         {
+            mu[j,] <- rep(0, d)
+         }
+         else if(length(which(Z==j))==1)
+         {
+            mu[j,] <- X[which(Z==j), ]
+         }
+         else
+         {
+            mu[j, ] <- colMeans(X[which(Z==j), ])
+         }
       }
+      
+      
       
       ranks <- matrix(sapply(1:C, function(val) length(which(Z==val))), 1, C) %*% mu^2
       ranking <- d + 1 - rank(ranks)
@@ -57,17 +69,21 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       
       obj.old <- obj.new
       t <- t+1
-      # print(t)
+      print(C)
    }
    
    if (is.null(ground) == FALSE) {
       ari.clus <- aricode::ARI(ground, Z)
       nmi.clus <- aricode::NMI(ground, Z)
       
-      return(list(Z, mu, "ARI" = ari.clus, "NMI" = nmi.clus))
+      # print(ari.clus)
+      print(C)
+      print(nmi.clus)
+      
+      return(list("Z" = Z, "No of Clusters" = C, "ARI" = ari.clus, "NMI" = nmi.clus))
    }
    
-   return(list(Z, mu))
+   return(list("Z" = Z, "No of Clusters" = C))
 }
 
 

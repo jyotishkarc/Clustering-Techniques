@@ -8,7 +8,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    
    Z <- matrix(0, nrow = n, ncol = k)
    Z <- c()
-   
+   mu <- initial.mu
    dist.mat <- matrix(0, nrow = n, ncol = k)
    
    for (j in 1:k) {
@@ -17,11 +17,23 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    
    Z <- apply(dist.mat, 1, which.min)
    # print(Z)
+   obj.old <- 0
+   for(i in 1:n)
+   {
+      dist.mat <- rep(0, k)
+      for(j in 1:k)
+      {
+         dist.mat[j] <- sum((X[i, ] - mu[j, ])^2)
+      }
+      obj.old <- obj.old + min(dist.mat)
+   }
+   
    count <- 0
    
    while (TRUE) {
       
-      mu <- new.mu <- matrix(0, k, d)
+      mu <- matrix(0, k, d)
+      obj.new <- 0
       
       for (j in 1:k) {
          mu[j,] <- colMeans(X[which(Z==j),])
@@ -34,28 +46,28 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       notL <- which(ranking > s)
       
       for (i in 1:n) {
-         Z[i] <- which.min(sapply(1:k, function(val) asg.func(X,mu,i,val,L,notL)))
+         dist.vec <- sapply(1:k, function(val) asg.func(X,mu,i,val,L,notL))
+         Z[i] <- which.min(dist.vec)
+         obj.new <- obj.new + min(dist.vec)
       }
       
-      for (j in 1:k) {
-         new.mu[j,] <- colMeans(X[which(Z==j),])
-      }
+      if ((obj.new - obj.old)^2 < tolerance) {break}
       
-      if (sum((mu - new.mu)^2) < tolerance) {break}
-      
-      mu <- new.mu
+      obj.old <- obj.new
       count <- count + 1
-      print(count)
    }
    
    if (is.null(ground) == FALSE) {
       ari.clus <- aricode::ARI(ground, Z)
       nmi.clus <- aricode::NMI(ground, Z)
       
-      return(list(Z, new.mu, "ARI" = ari.clus, "NMI" = nmi.clus))
+      # print(ari.clus)
+      print(nmi.clus)
+      
+      return(list(Z, "ARI" = ari.clus, "NMI" = nmi.clus))
    }
    
-   return(list(Z, new.mu))
+   return(list(Z))
 }
 
 
