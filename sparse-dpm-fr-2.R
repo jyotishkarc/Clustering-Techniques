@@ -1,6 +1,6 @@
 ## Author : SUPRATIK BASU
 
-sparse.dp.fr <- function(X, s, lambda, tolerance = 1e-07)
+sparse.dpm.fr.2 <- function(X, s, lambda, tolerance = 1e-07)
 {
   N <- nrow(X)
   d <- ncol(X)
