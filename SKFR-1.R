@@ -28,7 +28,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       }
       
       ranks <- matrix(sapply(1:k, function(val) length(which(Z==val))), 1, k) %*% mu^2
-      ranking <- d - rank(ranks)
+      ranking <- d + 1 - rank(ranks)
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)

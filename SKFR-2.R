@@ -39,7 +39,8 @@ sparse.km.fr.2 <- function(X, C, s, initial, tolerance = 1e-07)
       dist.mat <- rep(0, C)
       for(j in 1:C)
       {
-        dist.mat[j] <- sum((X[i, rank[j,1:s]] - centroid[j, rank[j,l]]) ^ 2) + sum((X[i, rank[j,s+1:N]]) ^ 2)
+        dist.mat[j] <- sum((X[i, rank[j,1:s]] - centroid[j, rank[j,l]]) ^ 2) 
+                                                + sum((X[i, rank[j,s+1:N]]) ^ 2)
       }
       new.Z[i, which.min(dist.mat)] <- 1
       obj.new <- obj.new + min(dist.mat)
