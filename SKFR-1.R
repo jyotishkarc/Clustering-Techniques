@@ -58,7 +58,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    }
    
    if (is.null(ground) == FALSE) {
-      ari.clus <- aricode::ARI(ground, Z)
+      # ari.clus <- aricode::ARI(ground, Z)
       nmi.clus <- aricode::NMI(ground, Z)
       
       # print(ari.clus)
