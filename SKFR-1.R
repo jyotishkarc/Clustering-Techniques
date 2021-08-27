@@ -8,6 +8,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    
    asg.vec <- matrix(0, nrow = n, ncol = k)
    asg.vec <- c()
+   Z <- matrix(0, n, k)
    mu <- initial.mu
    dist.mat <- matrix(0, nrow = n, ncol = k)
    
