@@ -19,7 +19,7 @@ km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
     
     cat("ARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
     return(list(final.cluster, t(final.centroids),
-                ARI.clus, NMI.clus))
+                "ARI" = ARI.clus, "NMI" = NMI.clus))
   }
   
   return(list(final.cluster, t(final.centroids)))
