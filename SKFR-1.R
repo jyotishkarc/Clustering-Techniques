@@ -6,8 +6,8 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    n <- nrow(X)
    d <- ncol(X)
    
-   Z <- matrix(0, nrow = n, ncol = k)
-   Z <- c()
+   asg.vec <- matrix(0, nrow = n, ncol = k)
+   asg.vec <- c()
    mu <- initial.mu
    dist.mat <- matrix(0, nrow = n, ncol = k)
    
@@ -15,8 +15,8 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       dist.mat[,j] <- apply(X, 1, function(val) distance.sq(val, initial.mu[j,]))
    }
    
-   Z <- apply(dist.mat, 1, which.min)
-   # print(Z)
+   asg.vec <- apply(dist.mat, 1, which.min)
+   # print(asg.vec)
    obj.old <- 0
    for(i in 1:n)
    {
@@ -36,10 +36,10 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       obj.new <- 0
       
       for (j in 1:k) {
-         mu[j,] <- colMeans(X[which(Z==j),])
+         mu[j,] <- colMeans(X[which(asg.vec==j),])
       }
       
-      ranks <- matrix(sapply(1:k, function(val) length(which(Z==val))), 1, k) %*% mu^2
+      ranks <- matrix(sapply(1:k, function(val) length(which(asg.vec==val))), 1, k) %*% mu^2
       ranking <- d + 1 - rank(ranks)
       
       L <- which(ranking <= s)
@@ -47,7 +47,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       
       for (i in 1:n) {
          dist.vec <- sapply(1:k, function(val) asg.func(X,mu,i,val,L,notL))
-         Z[i] <- which.min(dist.vec)
+         asg.vec[i] <- which.min(dist.vec)
          obj.new <- obj.new + min(dist.vec)
       }
       
@@ -57,17 +57,21 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       count <- count + 1
    }
    
+   for(i in 1:n){
+      Z[i, asg.vec[i]] <- 1
+   }
+   
    if (is.null(ground) == FALSE) {
-      # ari.clus <- aricode::ARI(ground, Z)
-      nmi.clus <- aricode::NMI(ground, Z)
+      # ari.clus <- aricode::ARI(ground, asg.vec)
+      nmi.clus <- aricode::NMI(ground, asg.vec)
       
       # print(ari.clus)
       print(nmi.clus)
       
-      return(list(Z, "ARI" = ari.clus, "NMI" = nmi.clus))
+      return(list("Z" = Z, "vec" = asg.vec, "ARI" = ari.clus, "NMI" = nmi.clus))
    }
    
-   return(list(Z))
+   return(list("Z" = Z, "vec" = asg.vec))
 }
 
 
