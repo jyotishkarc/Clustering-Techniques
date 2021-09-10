@@ -12,7 +12,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
    
    obj.old <- sum((X - matrix(rep(mu, n), n, d, byrow = TRUE))^2) + lambda
    
-   while(TRUE){
+   while(t<=10){
       
       mu <- matrix(0, C, d)
       obj.new <- lambda * C
@@ -35,7 +35,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       
       
       ranks <- matrix(sapply(1:C, function(val) length(which(Z==val))), 1, C) %*% mu^2
-      ranking <- d + 1 - rank(ranks)
+      ranking <- rank(ranks)
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)
@@ -65,7 +65,17 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
          # }
       }
       
-      if(abs(obj.new - obj.old) < tolerance) {break}
+      
+      v <- sort(unique(Z))
+      
+      u <- Z
+      for(i in 1:(length(v)))
+      {
+         u[which(Z==v[i])]=i
+      }
+      Z <- u
+      C <- max(Z)
+      if(abs(obj.new/obj.old - 1) < tolerance) {break}
       
       obj.old <- obj.new
       t <- t+1
@@ -80,7 +90,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       print(C)
       print(nmi.clus)
       
-      return(list("Z" = Z, "No of Clusters" = C, "ARI" = ari.clus, "NMI" = nmi.clus))
+      return(list("Z" = Z, "C" = C, "ARI" = ari.clus, "NMI" = nmi.clus))
    }
    
    return(list("Z" = Z, "No of Clusters" = C))
