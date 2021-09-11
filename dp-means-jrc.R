@@ -1,18 +1,17 @@
 
-DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-3){
+DP.means <- function(X, lambda, ground=NULL, epsilon=1e-03){
    
    n <- nrow(X)
-   d <- ncol(X)
    C <- 1
-   mu <- matrix(0, 1, d)
+   mu <- matrix(0, 1, ncol(X))
    mu[1,] <- t(colMeans(X))
    Z <- rep(1, n)
    
-   obj.old <- sum((X - matrix(rep(mu[1,], n), n, d, byrow = TRUE))^2) + lambda
+   obj.old <- sum((X - matrix(rep(mu[1,], n), n, ncol(X), byrow = TRUE))^2) + lambda
    
    count <- 0
    
-   while(TRUE)
+   while(count<=500)
    {
       for (i in 1:n)
       {
@@ -28,58 +27,42 @@ DP.means <- function(X, lambda, ground = NULL, epsilon = 1e-3){
          else {Z[i] <- which.min(dist.vec)}
          
          for(j in 1:C) {
-            if (length(which(Z == j)) > 1) {
-               mu[j,] <- colMeans(X[which(Z==j), ])
-            }
-            else {mu[j,] <- X[which(Z==j), ]}
-         }
+            if(length(which(Z==j))>1)
+               mu[j,] <- colMeans(X[Z==j,])
+            else if(length(which(Z==j))==0)
+               mu[j,] <- rep(0,ncol(X))
+            else
+               mu[j,]=X[Z==j,]}
       }
       
+      # print(C)
       count <- count + 1
-      print(count)
       
-      R <- matrix(0, n, d)
+      R <- matrix(0, n, ncol(X))
       for (j in 1:n) {R[j,] <- unlist(mu[Z[j],])}
       
       obj.new <- sum((X-R)^2) + lambda * C
-      if((obj.new - obj.old)^2 < epsilon) {break}
-      obj.old <- obj.new
-   }
-   
-   
-   ############ 2D plot
-   if(ncol(X) == 2){
-      print("HELLO")
+      v <- sort(unique(Z))
       
-      # original.plot <- ggplot(X , aes(V1,V2)) + 
-      #    geom_point(size = 2) + theme(legend.position = "none")
-      # 
-      # print(original.plot)
+      u <- Z
       
-      fg <- c()
-      for (k in 1:nrow(X)) {
-         fg[k] <- grDevices::rainbow(length(unique(Z)))[Z[k]]
+      for(i in 1:(length(v)))
+      {
+         u[which(Z==v[i])]=i
       }
+      Z <- u
+      C <- max(Z)
       
-      dpm.plot <- ggplot(X , aes(V1,V2 , color = fg)) +
-                  geom_point(size = 2) + theme(legend.position = "none")
-      
-      print(dpm.plot)
+      if(abs(obj.new/obj.old - 1) < epsilon) {break}
+      obj.old <- obj.new
+      print(C)
    }
    
+   if(is.null(ground)==F){nmi <- aricode::NMI(Z,ground)}
    
-   if(is.null(ground) == FALSE){
-      print("Done")
-      
-      return(list("Z" = Z , "Number-of-Clusters" = C,
-                  "No. of Iterations" = count,
-                  "ARI" = aricode::ARI(Z, ground), 
-                  "NMI" = aricode::NMI(Z, ground)))
-   }
-   
-   print("Done")
-
-   return(list("Z" = Z , "mu" = mu, "Number-of-Clusters" = C, 
-               "No. of Iterations" = count))
+   print(C)
+   print(nmi)
+   return(list("Z" = Z , "mu" = mu, "NMI"=nmi, 
+               "C" = C, "Iterations" = count))
 }
 
