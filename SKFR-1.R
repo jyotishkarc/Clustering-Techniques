@@ -41,7 +41,7 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       }
       
       ranks <- matrix(sapply(1:k, function(val) length(which(asg.vec==val))), 1, k) %*% mu^2
-      ranking <- d + 1 - rank(ranks)
+      ranking <- rank(ranks)
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)
@@ -52,7 +52,11 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
          obj.new <- obj.new + min(dist.vec)
       }
       
-      if ((obj.new - obj.old)^2 < tolerance) {break}
+      print(obj.new)
+      print(obj.old)
+      cat("\n")
+      
+      if ((obj.new/obj.old - 1)^2 < tolerance) {break}
       
       obj.old <- obj.new
       count <- count + 1
@@ -69,7 +73,9 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       # print(ari.clus)
       print(nmi.clus)
       
-      return(list("Z" = Z, "vec" = asg.vec, "ARI" = ari.clus, "NMI" = nmi.clus))
+      return(list("Z" = Z, "vec" = asg.vec, 
+                  # "ARI" = ari.clus, 
+                  "NMI" = nmi.clus))
    }
    
    return(list("Z" = Z, "vec" = asg.vec))
