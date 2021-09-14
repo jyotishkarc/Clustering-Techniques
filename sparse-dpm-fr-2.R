@@ -14,7 +14,7 @@ sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
     obj.old <- obj.old + sum((X[i,] - centroid)^2)
   }
   centroid <- matrix(centroid, 1, d)
-  while(t<=10)
+  while(t<=100)
   {
     D <- matrix(0, C, d)
     r <- matrix(0, C, d)

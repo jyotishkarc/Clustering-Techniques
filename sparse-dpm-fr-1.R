@@ -12,7 +12,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
    
    obj.old <- sum((X - matrix(rep(mu, n), n, d, byrow = TRUE))^2) + lambda
    
-   while(t<=10){
+   while(t<=100){
       
       mu <- matrix(0, C, d)
       obj.new <- lambda * C
@@ -83,14 +83,17 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
    }
    
    if (is.null(ground) == FALSE) {
-      ari.clus <- aricode::ARI(ground, Z)
+      # ari.clus <- aricode::ARI(ground, Z)
       nmi.clus <- aricode::NMI(ground, Z)
       
       # print(ari.clus)
       print(C)
       print(nmi.clus)
       
-      return(list("Z" = Z, "C" = C, "ARI" = ari.clus, "NMI" = nmi.clus))
+      return(list("Z" = Z, 
+                  "C" = C, 
+                  # "ARI" = ari.clus, 
+                  "NMI" = nmi.clus))
    }
    
    return(list("Z" = Z, "No of Clusters" = C))

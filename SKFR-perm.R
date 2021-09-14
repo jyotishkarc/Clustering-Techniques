@@ -1,5 +1,7 @@
 SKFR.perm <- function(X, k, B){
    
+   source('~/R/R Codes/Clustering Techniques/SKFR-1.R')
+   
    X <- as.matrix(X)
    n <- nrow(X)
    d <- ncol(X)
@@ -15,13 +17,12 @@ SKFR.perm <- function(X, k, B){
    # initial.mu <- t(initial(t(X), k))
    
    for(s in 1:d){
-      initial.mu <- t(initial(t(X), k))
+      print(s)
       
+      initial.mu <- t(initial(t(X), k))
       O.stat.X <- O.stat(X, k, s, initial.mu)
       print(O.stat.X)
       O.stat.X.perm <- sapply(1:B, function(b) O.stat(X.perm[[b]], k, s, initial.mu))
-      if(s == 1) print(O.stat.X.perm)
-      # print(O.stat.X.perm)
       gap.stat[s] <- log(O.stat.X) - mean(log(O.stat.X.perm))
    }
    
@@ -48,7 +49,7 @@ O.stat <- function(X, k, s, initial.mu){
       if(length(which(asg.vec == i)) == 1){
          centroid[i,] <- X[i,]
       }
-      else if(length(which(asg.vec == i)) == 1){
+      else if(length(which(asg.vec == i)) == 0){
          centroid[i,] <- rep(0, d)
       }
       else centroid[i,] <- colMeans(X[which(asg.vec == i),])
