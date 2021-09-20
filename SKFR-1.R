@@ -37,11 +37,19 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       obj.new <- 0
       
       for (j in 1:k) {
-         mu[j,] <- colMeans(X[which(asg.vec==j),])
+         # mu[j,] <- colMeans(X[which(asg.vec==j),])
+         
+         if(length(which(asg.vec == j)) == 1){
+            mu[j,] <- X[which(asg.vec == j),]
+         }
+         else if(length(which(asg.vec == j)) == 0){
+            mu[j,] <- rep(0, d)
+         }
+         else mu[j,] <- colMeans(X[which(asg.vec == j),])
       }
       
       ranks <- matrix(sapply(1:k, function(val) length(which(asg.vec==val))), 1, k) %*% mu^2
-      ranking <- rank(ranks)
+      ranking <- d + 1 - rank(ranks)
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)
@@ -52,9 +60,9 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
          obj.new <- obj.new + min(dist.vec)
       }
       
-      print(obj.new)
-      print(obj.old)
-      cat("\n")
+      # print(obj.new)
+      # print(obj.old)
+      # cat("\n")
       
       if ((obj.new/obj.old - 1)^2 < tolerance) {break}
       
