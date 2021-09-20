@@ -40,7 +40,7 @@ sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
         D[j,l] <- centroid[j,l] ^ 2
       }
       
-      r[j, ] <- rank(D[j, ])
+      r[j, ] <- d + 1 - rank(D[j, ])
     }
     for(i in 1:N)
     {
