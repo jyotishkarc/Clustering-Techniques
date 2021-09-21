@@ -21,35 +21,32 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    obj.old <- 0
    for(i in 1:n)
    {
-      dist.mat <- rep(0, k)
-      for(j in 1:k)
-      {
-         dist.mat[j] <- sum((X[i, ] - mu[j, ])^2)
-      }
+      # dist.mat <- rep(0, k)
+      # for(j in 1:k)
+      # {
+      #    dist.mat[j] <- sum((X[i, ] - mu[j, ])^2)
+      # }
       obj.old <- obj.old + min(dist.mat)
    }
    
    count <- 0
    
-   while (TRUE) {
+   while (count<=500) {
       
       mu <- matrix(0, k, d)
       obj.new <- 0
       
       for (j in 1:k) {
-         # mu[j,] <- colMeans(X[which(asg.vec==j),])
-         
-         if(length(which(asg.vec == j)) == 1){
-            mu[j,] <- X[which(asg.vec == j),]
-         }
-         else if(length(which(asg.vec == j)) == 0){
+         if(length(which(asg.vec==j))==1)
+            mu[j,] <- X[which(asg.vec==j),]
+         else if(length(which(asg.vec==j))==0)
             mu[j,] <- rep(0, d)
-         }
-         else mu[j,] <- colMeans(X[which(asg.vec == j),])
+         else
+            mu[j,] <- colMeans(X[which(asg.vec==j),])
       }
       
       ranks <- matrix(sapply(1:k, function(val) length(which(asg.vec==val))), 1, k) %*% mu^2
-      ranking <- d + 1 - rank(ranks)
+      ranking <- d+1-rank(as.numeric(ranks))
       
       L <- which(ranking <= s)
       notL <- which(ranking > s)
@@ -60,20 +57,17 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
          obj.new <- obj.new + min(dist.vec)
       }
       
-      # print(obj.new)
-      # print(obj.old)
-      # cat("\n")
-      
-      if ((obj.new/obj.old - 1)^2 < tolerance) {break}
+      if (abs(obj.new /obj.old- 1) < tolerance) {break}
       
       obj.old <- obj.new
       count <- count + 1
+      #print(obj.new)
    }
    
    for(i in 1:n){
       Z[i, asg.vec[i]] <- 1
    }
-   
+   # print(asg.vec)
    if (is.null(ground) == FALSE) {
       # ari.clus <- aricode::ARI(ground, asg.vec)
       nmi.clus <- aricode::NMI(ground, asg.vec)
@@ -81,12 +75,10 @@ sparse.km.fr.1 <- function(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
       # print(ari.clus)
       print(nmi.clus)
       
-      return(list("Z" = Z, "vec" = asg.vec, 
-                  # "ARI" = ari.clus, 
-                  "NMI" = nmi.clus))
+      return(list("Z" = Z, "vec" = asg.vec, "NMI" = nmi.clus, "obj"=obj.new))
    }
    
-   return(list("Z" = Z, "vec" = asg.vec))
+   return(list("Z" = Z, "vec" = asg.vec, "obj"=obj.new,"features"=L))
 }
 
 
