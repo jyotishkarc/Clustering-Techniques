@@ -30,12 +30,15 @@ grid.search <- function(X, s, gt)
   print("HI")
   while(i>=low)
   {
-    print("yay")
-    #res[[t]] <- DP.means(X, i, gt)
-    res[[t]] <- sparse.dpm.fr.2(X, s, i, gt)
+    #print("yay")
+    
+    res[[t]] <- DP.means(X, i, gt)
+    #res[[t]] <- sparse.dpm.fr.2(X, s, i, gt)
     #res[[t]] <- sparse.dpm.fr.1(X,s,i,gt)
+    
     print(i)
-    Z=res[[t]]$Z
+    
+    #Z=res[[t]]$Z
     C[t] <- res[[t]]$C
     nmi[t] <- res[[t]]$NMI
     ob[t]=res[[t]]$obj
