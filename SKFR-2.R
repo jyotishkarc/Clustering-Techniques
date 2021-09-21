@@ -49,7 +49,7 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
       {
         D[j,l] <- sum(Z[ ,j]) * centroid[j,l] ^ 2
       }
-      r[j, ] <- rank(D[j, ])
+      r[j, ] <- d + 1 - rank(D[j, ])
     }
     for(i in 1:N)
     {
@@ -80,5 +80,5 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
     asg.vector <- asg.vector + i*Z[ ,i]
   
   print(NMI(asg.vector, gt))
-  return(list("Z" = Z, "vec" = asg.vector, "centroids" = centroid))
+  return(list("Z" = Z, "vec" = asg.vector, "centroids" = centroid, "NMI" = NMI(asg.vector, gt)))
 }
