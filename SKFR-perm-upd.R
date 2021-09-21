@@ -1,4 +1,12 @@
-SKFR.boot <- function(X, k, B){
+library(doParallel)
+
+no.cores = round(detectCores() * 0.75)
+cl = makeCluster(spec = no.cores, type = 'PSOCK')
+registerDoParallel(cl)
+
+clusterExport(cl, ls(), envir = environment())
+
+SKFR.perm.upd <- function(X, k, B){
    
    
    X <- as.matrix(X)
@@ -11,7 +19,7 @@ SKFR.boot <- function(X, k, B){
       X.boot[[b]] <- apply(X, 2, 
                            function(column){sample(column, 
                                                    length(column), 
-                                                   replace = F)})
+                                                   replace = FALSE)})
    }
    
    gap.stat <- c()
@@ -21,11 +29,20 @@ SKFR.boot <- function(X, k, B){
       print(s)
       
       initial.mu <- t(initial(t(X), k))
-      O.stat.X <- O.stat(X, k, s, initial.mu)
+      O.stat.X <- O.stat.upd(X, k, s, initial.mu)
       print(O.stat.X)
-      O.stat.X.boot <- sapply(1:B, function(b) O.stat(X.boot[[b]], k, s, initial.mu))
+      
+      # O.stat.X.boot <- sapply(1:B, function(b) O.stat.upd(X.boot[[b]],k,s,initial.mu))
+      
+      clusterExport(cl, c('X','k','s','initial.mu'), envir = environment())
+      O.stat.X.boot <- parSapply(cl, 1:B, function(b){
+                                          O.stat.upd(X.boot[[b]],k,s,initial.mu)})
+      
       gap.stat[s] <- log(O.stat.X) - mean(log(O.stat.X.boot))
    }
+   
+   # stopCluster(cl)
+   # gc()
    
    print(gap.stat)
    return(which.max(gap.stat))
@@ -33,33 +50,20 @@ SKFR.boot <- function(X, k, B){
 
 
 
-O.stat <- function(X, k, s, initial.mu){
+O.stat.upd <- function(X, k, s, initial.mu){
    
    X <- as.matrix(X)
    n <- nrow(X)
    d <- ncol(X)
    
-   X.bar <- matrix(rep(colMeans(X), n), n, d, byrow = TRUE)
+   # X.bar <- matrix(rep(colMeans(X), n), n, d, byrow = TRUE)
    
    result <- sparse.km.fr.1(X, k, s, initial.mu, ground = NULL, tolerance = 1e-3)
    L=result$features
    mu=matrix(0,n,d)
    for(i in 1:n)
       mu[i,L]=colMeans(X)[L]
-   Z <- result[[1]]
-   asg.vec <- result[[2]]
-   centroid <- matrix(0, k, d)
-   
-   for(i in 1:k){
-      if(length(which(asg.vec == i)) == 1){
-         # centroid[i,] <- X[i,]
-         centroid[i,] <- X[which(asg.vec == i),]
-      }
-      else if(length(which(asg.vec == i)) == 0){
-         centroid[i,] <- rep(0, d)
-      }
-      else centroid[i,] <- colMeans(X[which(asg.vec == i),])
-   }
    
    return(sum((X-mu)^2)-result$obj)
 }
+
