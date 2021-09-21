@@ -12,7 +12,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
    
    obj.old <- sum((X - matrix(rep(mu, n), n, d, byrow = TRUE))^2) + lambda
    
-   while(t<=100){
+   while(t<=50){
       
       mu <- matrix(0, C, d)
       obj.new <- lambda * C

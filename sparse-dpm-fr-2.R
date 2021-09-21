@@ -1,6 +1,4 @@
-## Author : SUPRATIK BASU
-
-sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
+sparse.dp.fr <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
 {
   N <- nrow(X)
   d <- ncol(X)
@@ -14,7 +12,7 @@ sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
     obj.old <- obj.old + sum((X[i,] - centroid)^2)
   }
   centroid <- matrix(centroid, 1, d)
-  while(t<=100)
+  while(t<=20)
   {
     D <- matrix(0, C, d)
     r <- matrix(0, C, d)
@@ -39,8 +37,8 @@ sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
       {
         D[j,l] <- centroid[j,l] ^ 2
       }
-      
-      r[j, ] <- d + 1 - rank(D[j, ])
+      D[j,] <- abs((D[j,]-mean(D[j,]))/sd(D[j,]))
+      r[j, ] <- d+1-rank(D[j, ])
     }
     for(i in 1:N)
     {
@@ -96,7 +94,7 @@ sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
   print(C)
   if(is.null(gt)==F)
   {
-    print(aricode::NMI(Z, gt))
+    print(NMI(Z, gt))
   }
-  return(list("C"=C,"Z"=Z,"NMI"=aricode::NMI(Z,gt)))
+  return(list("C"=C,"Z"=Z,"NMI"=NMI(Z,gt)))
 }
