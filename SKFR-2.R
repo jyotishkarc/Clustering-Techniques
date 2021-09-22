@@ -1,6 +1,4 @@
-## Author : SUPRATIK BASU
-
-sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
+sparse.km.fr <- function(X, C, s, gt=NULL, tolerance = 1e-04)
 {
   N <- nrow(X)
   d <- ncol(X)
@@ -32,7 +30,7 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
   }
   
   t <- 0
-  while(TRUE)
+  while(t<=500)
   {
     D <- matrix(0, C, d)
     new.Z <- matrix(0, N, C)
@@ -40,7 +38,12 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
     r <- matrix(0, C, d)
     for(j in 1:C)
     {
-      centroid[j, ] <- colMeans(X[which(Z[ ,j]==1), ])
+      if(length(which(Z[,j]==1))==1)
+      {
+        centroid[j,] <- X[which(Z[,j]==1),]
+      }
+      else
+        centroid[j, ] <- colMeans(X[which(Z[ ,j]==1), ])
       if(sum(Z[,j])==0)
       {
         centroid[j,] <- rep(0, d)
@@ -49,7 +52,7 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
       {
         D[j,l] <- sum(Z[ ,j]) * centroid[j,l] ^ 2
       }
-      r[j, ] <- d + 1 - rank(D[j, ])
+      r[j, ] <- d+1-rank(D[j, ])
     }
     for(i in 1:N)
     {
@@ -67,8 +70,9 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
       new.Z[i, which.min(dist.mat)] <- 1
       obj.new <- obj.new + min(dist.mat)
     }
+    
     Z <- new.Z
-    if(abs(obj.new - obj.old) < tolerance)
+    if(abs(obj.old/obj.new - 1) < tolerance)
     {
       break
     }
@@ -80,5 +84,6 @@ sparse.km.fr.2 <- function(X, C, s, gt=NULL, tolerance = 1e-04)
     asg.vector <- asg.vector + i*Z[ ,i]
   
   print(NMI(asg.vector, gt))
-  return(list("Z" = Z, "vec" = asg.vector, "centroids" = centroid, "NMI" = NMI(asg.vector, gt)))
+  return(list(Z, asg.vector, "centroids" = centroid,"NMI"=NMI(asg.vector,gt)))
 }
+
