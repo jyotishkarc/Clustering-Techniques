@@ -33,8 +33,8 @@ grid.search <- function(X, s, gt)
     #print("yay")
     
     #res[[t]] <- DP.means(X, i, gt)
-    res[[t]] <- sparse.dpm.fr.1(X, s, i, gt)
-    #res[[t]] <- sparse.dp.fr(X,s,i,gt)
+    #res[[t]] <- sparse.dpm.fr.1(X, s, i, gt)
+    res[[t]] <- sparse.dpm.fr.2(X,s,i,gt)
     
     #print(i)
     
