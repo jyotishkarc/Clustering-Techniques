@@ -11,15 +11,19 @@ km.pp <- function(data, k, ground = NULL){ # Input transposed data matrix
   if(is.null(ground) == FALSE){
     ground <- as.numeric(as.matrix(ground))
     
-    ARI.clus <- aricode::ARI(final.cluster, ground)
+    #ARI.clus <- aricode::ARI(final.cluster, ground)
     NMI.clus <- aricode::NMI(final.cluster, ground)
     
     # print(ARI.clus)
     # print(NMI.clus)
     
-    cat("ARI =",ARI.clus,"\nNMI =",NMI.clus,"\n")
-    return(list(final.cluster, t(final.centroids),
-                "ARI" = ARI.clus, "NMI" = NMI.clus))
+    cat(#"ARI =",ARI.clus,
+        "\nNMI =",NMI.clus,"\n")
+    
+    return(list(final.cluster, 
+                t(final.centroids),
+                #"ARI" = ARI.clus, 
+                "NMI" = NMI.clus))
   }
   
   return(list(final.cluster, t(final.centroids)))
