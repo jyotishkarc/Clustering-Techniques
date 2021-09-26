@@ -34,7 +34,8 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       
       
       
-      ranks <- matrix(sapply(1:C, function(val) length(which(Z==val))), 1, C) %*% mu^2
+      ranks <- matrix(sapply(1:C, 
+                             function(val) length(which(Z==val))), 1, C) %*% mu^2
       ranking <- d+1-rank(ranks)
       
       L <- which(ranking <= s)
