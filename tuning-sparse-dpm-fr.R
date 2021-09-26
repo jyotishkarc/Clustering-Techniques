@@ -13,6 +13,7 @@ tuning.sparse.dpm.fr <- function(X, B){
       U[i,] <- sample(1:N, N, replace = TRUE)
       V[i,] <- sample(1:N, N, replace = TRUE)
    }
+   
    p=as.numeric(dist(X))
    low=min(p[which(p!=0)])
    i <- low
@@ -51,22 +52,18 @@ tuning.sparse.dpm.fr <- function(X, B){
                         
                         fV <- 1
                      }
-                     
                   }
-                  
                   v[j] <- v[j] + abs(fU - fV)
-                  
-                  
                }
             }
             v[j] <- v[j] / N^2
          }
+         
          print("yay")
          print(i)
          print(s)
          
          M[t,s] <- mean(v)
-         
       }
       
       i <- i + incr
@@ -76,6 +73,4 @@ tuning.sparse.dpm.fr <- function(X, B){
    T.ind <- which.min(M)
    lambda <- seq(low, high, by = incr)[T.ind %% 1000]
    s <- ceiling(T.ind / 1000)
-   
-   
 }
