@@ -1,12 +1,13 @@
 
 library(magrittr)
 library(doParallel)
+library(parallelDist)
 
 no.cores <- round(detectCores() * 0.75)
 cl <- makeCluster(spec = no.cores, type = 'PSOCK')
 registerDoParallel(cl)
 
-clusterExport(cl, ls())
+clusterExport(cl, ls(), envir = environment())
 
 tuning.sparse.dpm.fr <- function(X, B){
    
@@ -21,19 +22,28 @@ tuning.sparse.dpm.fr <- function(X, B){
       V[i,] <- sample(1:N, N, replace = TRUE)
    }
    
-   p=as.numeric(dist(X))
-   low=min(p[which(p!=0)])
-   i <- low
+   p <- as.numeric(parDist(X, upper = TRUE, 
+                           diag = TRUE, 
+                           threads = no.cores))
+   
+   # i <- low
+   low <- min(p[which(p!=0)])
    high <- max(diag(X %*% t(X)))
    incr <- (high - low)/999
    
    lambda.seq <- seq(low, high, by = incr)
    M <- matrix(0, nrow = 1000, ncol = d)
-   t <- 1
    
-   result <- parSapply(cl, lambda.seq, function(i){
-      for (s in 1:d) {
+   clusterExport(cl, c('X','U','V','s','B','N','d','M',
+                       'sparse.dpm.fr.1'),
+                 envir = environment())
+   
+   for (s in 1:d) {
+      print(s)
+      
+      parSapply(cl, lambda.seq, function(i){
          v <- rep(0,B)
+         
          for (j in 1:B){
             res1 <- sparse.dpm.fr.1(X[U[j,],], s, i)
             res2 <- sparse.dpm.fr.1(X[V[j,],], s, i)
@@ -59,26 +69,24 @@ tuning.sparse.dpm.fr <- function(X, B){
                         fV <- 1
                      }
                   }
+                  
                   v[j] <- v[j] + abs(fU - fV)
                }
             }
             v[j] <- v[j] / N^2
          }
          
-         print("yay")
-         print(i)
-         print(s)
-         
-         M[t,s] <- mean(v)
-      }
-      
-      t <- t + 1
-   })
+         M[which(lambda.seq == i),s] <- mean(v)
+      })
+   }
    
    T.ind <- which.min(M)
    
-   lambda <- seq(low, high, by = incr)[T.ind %% 1000]
-   s <- ceiling(T.ind / 1000)
+   lambda <- lambda.seq[T.ind %% 1000]
+   S <- ceiling(T.ind / 1000)
    
-   return(list(lambda, s))
+   stopCluster(cl)
+   gc()
+   
+   return(list(lambda, S))
 }
