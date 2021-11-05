@@ -12,7 +12,7 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
    
    obj.old <- sum((X - matrix(rep(mu, n), n, d, byrow = TRUE))^2) + lambda
    
-   while(t<=100){
+   while(t<=200){
       
       mu <- matrix(0, C, d)
       obj.new <- lambda * C
@@ -92,10 +92,11 @@ sparse.dpm.fr.1 <- function(X, s, lambda, ground = NULL, tolerance = 1e-3){
       print(C)
       print(nmi.clus)
       
-      return(list("Z" = Z, "C" = C, "ARI" = ari.clus, "NMI" = nmi.clus, "obj"=obj.new))
+      return(list("Z" = Z, "C" = C, "ARI" = ari.clus, "NMI" = nmi.clus,
+                  "features" = L, "obj" = obj.new))
    }
    
-   return(list("Z" = Z, "No of Clusters" = C))
+   return(list("Z" = Z, "C" = C, "features" = L, "obj" = obj.new))
 }
 
 
