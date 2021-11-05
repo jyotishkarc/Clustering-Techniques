@@ -47,17 +47,12 @@ SDPFR.boot <- function(X, gt.X, B){
       gap.stat <- c()
       
       for(s in 1:d){
-         # start.time <- proc.time()
-         print(s)
-         
          O.stat.X <- O.stat(X, lambda.seq[u], s)
-         # print(O.stat.X)
          O.stat.X.boot <- sapply(1:B, function(b) O.stat(X.boot[[b]], 
                                                          lambda.seq[u], s))
          gap.stat[s] <- log(O.stat.X) - mean(log(O.stat.X.boot))
       }
       
-      # print(gap.stat)
       return(gap.stat)
    }))
    
@@ -79,8 +74,6 @@ SDPFR.boot <- function(X, gt.X, B){
                     "opt.lambda" = NA, "opt.s" = NA, "opt.nmi" = NA)
    
    return(complete)
-   
-   # return(list(lambda,s))
 }
 
 
