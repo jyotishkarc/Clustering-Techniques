@@ -1,15 +1,18 @@
+
+library(magrittr)
+
 labels.rename <- function(X){
    
    X <- as.matrix(X)
    
-   if (length(setdiff(unique(X[,1]), 1:length(unique(X[,1])))) == 0) {
-      return(list("TRAIN" = X.train, "TEST" = X.test))
+   if (length(setdiff(unique(X[,ncol(X)]), 1:length(unique(X[,ncol(X)])))) == 0) {
+      return(X)
    }
    
-   originial.labels <- X[,ncol(X)] %>% as.character()
-   new.label.names <- 1 : length(unique(originial.labels))
+   original.labels <- X[,ncol(X)] %>% as.character()
+   new.label.names <- 1 : length(unique(original.labels))
    
-   X[,ncol(X)] <- new.label.names[as.factor(originial.labels)]
+   X[,ncol(X)] <- new.label.names[as.factor(original.labels)]
    
    return(X)
 }
