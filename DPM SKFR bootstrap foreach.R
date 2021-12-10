@@ -91,6 +91,7 @@ O.stat <- function(X, lambda, s){
    Z <- result[[1]]
    asg.vec <- result[[2]]
 
-   return(sum((X-mu)^2)+lambda*result[[2]]-result$obj)
+   # return(sum((X-mu)^2)+lambda*result[[2]]-result$obj)
+   return(sum((X-mu)^2)+lambda-result$obj)
 }
 
