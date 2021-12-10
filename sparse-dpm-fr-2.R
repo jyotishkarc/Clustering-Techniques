@@ -1,4 +1,4 @@
-sparse.dpm.fr.2 <- function(X, s, lambda, gt = NULL, tolerance = 1e-03)
+sparse.dpm.fr.2 <- function(X, s, lambda, ground = NULL, tolerance = 1e-03)
 {
   N <- nrow(X)
   d <- ncol(X)
