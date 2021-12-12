@@ -37,7 +37,7 @@ grid.search <- function(X, s = NULL, gt){
   print("HI")
   
   # source('~/R/R Codes/Clustering Techniques/dp-means-jrc.R')
-  source('~/R/R Codes/Clustering Techniques/sparse-dpm-fr-1.R')
+  # source('~/R/R Codes/Clustering Techniques/sparse-dpm-fr-1.R')
   # source('~/R/R Codes/Clustering Techniques/sparse-dpm-fr-2.R')
   
   # clusterExport(clus, c('X','s','gt','DP.means'), 
