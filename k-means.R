@@ -1,3 +1,5 @@
+# Hi
+
 km <- function(data , k , initial, tolerance = 1e-6){
    X <- as.matrix(data)
    n <- nrow(X)
