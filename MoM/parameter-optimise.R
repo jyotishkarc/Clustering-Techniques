@@ -14,11 +14,12 @@ parameter.optimise <- function(X, ground)
   temp2 <- min(low,high)
   low <- temp2
   high <- temp
-  c <- (high - low) / 100
+  c <- (high - low) / 10
   lambda <- seq(low,high,c)
+  print(lambda)
   nmi.clus <- c()
   ari.clus <- c()
-  val[[i]] <- list()
+  val <- list()
   # print(lambda)
   # return()
   for(i in 1 : length(lambda))
@@ -31,7 +32,43 @@ parameter.optimise <- function(X, ground)
   }
   j <- which.max(nmi.clus)
   r <- which.max(ari.clus)
-  return(list(lambda[j], val[[j]][[3]], val[[j]][[2]], nmi.clus[j], ari.clus[r]))
+  c <- c / 10
+  if(j == 11)
+    lambda.second <- seq(lambda[j - 1], lambda[j], c)
+  else if(j == 1)
+    lambda.second <- seq(lambda[j], lambda[j + 1], c)
+  else
+    lambda.second <- seq(lambda[j - 1], lambda[j + 1], c)
+  val.second <- list()
+  nmi.clus.second <- c()
+  ari.clus.second <- c()
+  for(i in 1 : length(lambda.second))
+  {
+    val.second[[i]] <- optimise.partitions(X, lambda.second[i], ground)
+    nmi.clus.second[i] <- val.second[[i]][[4]]
+    ari.clus.second[i] <- val.second[[i]][[5]]
+    print("YES")
+    print(i)
+  }
+  j <- which.max(nmi.clus.second)
+  r <- which.max(ari.clus.second)
+  c <- c / 10
+  print(j)
+  lambda.third <- seq(lambda.second[j - 1], lambda.second[j + 1], c)
+  val.third <- list()
+  nmi.clus.third <- c()
+  ari.clus.third <- c()
+  for(i in 1 : length(lambda.third))
+  {
+    val.third[[i]] <- optimise.partitions(X, lambda.third[i], ground)
+    nmi.clus.third[i] <- val.third[[i]][[4]]
+    ari.clus.third[i] <- val.third[[i]][[5]]
+    print("YES")
+    print(i)
+  }
+  j <- which.max(nmi.clus.third)
+  r <- which.max(ari.clus.third)
+  return(list(lambda.third[j], val.third[[j]][[3]], val.third[[j]][[2]], nmi.clus.third[j], ari.clus.third[r]))
 }
 
 optimise.partitions <- function(X, lambda, ground)
@@ -40,15 +77,14 @@ optimise.partitions <- function(X, lambda, ground)
   qt <- floor(n / 2)
   #lambda <- (ncol(X) + 1) * sum(dist(X)) / (n * (n - 1))
   #print(lambda)
-  # B <- seq(3, (qt - ((qt + 1) %% 2)), 2)
-  b <- floor(2 * nrow(X)/5) - floor(2 * nrow(X)/5) %% 2 - 1
-  B <- seq(b,(qt - ((qt + 1) %% 2)),2)
+  #B <- seq(1501, (qt - ((qt + 1) %% 2)), 2)
+  B <- 1500
   val <- list()
   nmi.clus <- c()
   ari.clus <- c()
   for(i in 1 : length(B))
   {
-    val[[i]] <- dpm.mom(X, lambda, 0.05, B[i], 1, 10, ground)
+    val[[i]] <- dpm.mom(X, lambda, 1, B[i], 1.02, 10, ground)
     nmi.clus[i] <- val[[i]]$NMI
     ari.clus[i] <- val[[i]]$ARI
     if(val[[i]]$C == 1 | val[[i]]$C >= (n / 3))
@@ -81,4 +117,24 @@ detect.outlier <- function(X)
   #print(Z)
   print(outlier)
   return((outlier / nrow(X)))
+}
+
+spatial <- function(X)
+{
+  mu <- colMeans(X)
+  t <- 0
+  while(t <= 100){
+    s <- 0
+    for(i in 1 : nrow(X))
+    {
+      s <- s + (1 / sqrt(sum(X[i, ] - mu)))
+    }
+    m <- rep(0, ncol(X))
+    for(i in 1 : nrow(X))
+    {
+      m <- m + X[i, ] / sqrt(sum(X[i, ] - mu))
+    }
+    mu <- m / s
+    t <- t + 1}
+  return(mu)
 }
