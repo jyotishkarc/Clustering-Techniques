@@ -1,3 +1,5 @@
+library(SimDesign)
+
 simulate = function(k, out.lim, sigma)
 {
   cd = seq(-1, 1, 2 / (k - 1))
@@ -8,7 +10,7 @@ simulate = function(k, out.lim, sigma)
   for(i in 1:k)
   {
     for(j in 1:k){
-      centroid [l, ] = c(cd[i],cd[j])
+      centroid[l, ] = c(cd[i],cd[j])
       l = l+1}
   }
   for(i in 1:500)
