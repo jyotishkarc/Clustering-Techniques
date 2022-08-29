@@ -1,5 +1,9 @@
-ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, tol = 1e-03)
-{
+
+library(aricode)
+library(gtools)
+
+ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max = 100, ground = NULL, tol = 1e-03){
+  
   n = nrow(X) #Initialization of the Data
   p = ncol(X)
   K = floor(n / L)
@@ -11,7 +15,7 @@ ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, 
   centroid = t(colMeans(X))
   G = list()
   
-  B <= list() #Partitioning of the data into buckets
+  B <- list() #Partitioning of the data into buckets
   indices = permute(1 : n)
   for(i in 1 : L)
   {
@@ -26,12 +30,14 @@ ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, 
   {
     for(j in 1 : nrow(B[[i]]))
     {
-      f.old[i] = f.old[i] + (1 / nrow(B[[i]])) * as.numeric(t(B[[i]][j, ] - centroid[1, ]) %*% W %*% (B[[i]][j, ] - centroid[1, ]))
+      f.old[i] = f.old[i] + (1 / nrow(B[[i]])) * as.numeric(t(B[[i]][j, ] - centroid[1, ]) %*% 
+                                                               W %*% (B[[i]][j, ] - centroid[1, ]))
     }
   }
   fun.old = median(f.old)
   
   t = 1
+  
   while(t <= T.max)
   {
     G[[t]] <- matrix(0, n, p)
@@ -137,11 +143,13 @@ ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, 
   {
     nmi.clus <- aricode::NMI(ground, Z)
     ari.clus <- aricode::ARI(ground, Z)
-    # print(C)
-    # print(nmi.clus)
-    # print(ari.clus)
+    print(C)
+    print(nmi.clus)
+    print(ari.clus)
     return(list("Z" = Z, "C" = C, "NMI" = nmi.clus, "ARI" = ari.clus, 
                 "objective" = fun.new))
   }
   return(list("Z" = Z, "C" = C, "objective" = fun.new))
 }
+
+
