@@ -1,6 +1,7 @@
 
 library(gtools)
 library(aricode)
+library(dplyr)
 
 
 ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, tol = 1e-03)
