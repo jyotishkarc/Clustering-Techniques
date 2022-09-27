@@ -1,7 +1,7 @@
 
 library(gtools)
 library(aricode)
-library(dplyr)
+
 
 
 ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, tol = 1e-03)
@@ -192,6 +192,7 @@ ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, 
     }
     w = exp(-D / lambda.w)
     w = w / sum(w)
+    W = diag(w)
     f.new = rep((lambda.k * C + lambda.w * sum(w * log(w))) / n, L)
     if(rem > 0){
       for(i in 1 : rem)
@@ -235,8 +236,22 @@ ew.dpm.mom = function(X, lambda.k, lambda.w, eps, L, eta, T.max, ground = NULL, 
     if(abs(fun.new / fun.old - 1) < tol)
       break
     fun.old = fun.new
+    counts = as.numeric(table(Z))
     t = t + 1
     print(t)
+  }
+  cts.1 = which(counts > 2)
+  cts.2 = which(counts <= 2)
+  centroid = centroid[-cts.2, ]
+  C = length(cts.1)
+  for(i in 1 : n)
+  {
+    dist = c()
+    for(j in 1 : C)
+    {
+      dist[j] = sum(w * (X[i, ] - centroid[j, ]) ^ 2)
+    }
+    Z[i] = which.min(dist)
   }
   if(is.null(ground) == F)
   {
