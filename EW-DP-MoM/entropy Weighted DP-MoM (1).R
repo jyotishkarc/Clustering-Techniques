@@ -1,3 +1,4 @@
+
 ew.dpm.mom = function(X, lambda.k, lambda.w, 
                       eps, L, eta, n.0, T.max, 
                       ground = NULL, tol = 1e-03)
@@ -230,7 +231,6 @@ ew.dpm.mom = function(X, lambda.k, lambda.w,
     if(fun.new == 0)
     {
       t <- t + 1
-      # print(t)
       next
     }
     if(abs(fun.new / fun.old - 1) < tol)
@@ -274,7 +274,8 @@ ew.dpm.mom = function(X, lambda.k, lambda.w,
 
 #### NOT RUN
 # 
-# res = ew.dpm.mom(X = jain.data.3, lambda,k = 244, lambda.w = 3300,
+# res = ew.dpm.mom(X = jain.data.3, 
+#                  lambda.k = 244, lambda.w = 3300,
 #                  eps = 1, L = 3, eta = 0.1, n.0 = 0, T.max = 20,
 #                  ground = jain.gt)
 
