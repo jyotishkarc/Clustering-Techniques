@@ -2,6 +2,7 @@
 library(dplyr)
 library(ggplot2)
 library(reshape2)
+library(multipanelfigure)
 
 if(FALSE){
    df.jain <- data.frame("outliers" = seq(0,80,20),
@@ -23,8 +24,24 @@ if(FALSE){
       ylim(c(0,1))
 }
 
+add.outliers <- function(dataset, no.of.outliers){
+   N <- nrow(dataset)
+   d <- ncol(dataset)
+   
+   ranges <- dataset %>% apply(2, range)
+   
+   out.mat <- matrix(0, nrow = no.of.outliers, ncol = d)
+   
+   for(j in 1:d){
+      out.mat[,j] <- runif(no.of.outliers, min = ranges[1,j], max = ranges[2,j])
+   }
+   
+   return(rbind(dataset,out.mat))
+}
 
-if(TRUE){
+
+
+if(FALSE){
 
    Jain_Simulation_4[ ,-1] %>%
       cbind("legend" = Jain_Ground[,-1] %>% as.numeric() %>% c(rep(3,80)) %>% as.factor()) %>%
@@ -60,26 +77,118 @@ if(TRUE){
    #    # scale_color_discrete() +
    #    theme_minimal()
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
    
 }
+
+
+
+if(TRUE){
+   
+   jain.out.20 <- add.outliers(jain[,-3],20) %>% as.data.frame()
+   jain.out.40 <- add.outliers(jain[,-3],40) %>% as.data.frame()
+   jain.out.60 <- add.outliers(jain[,-3],60) %>% as.data.frame()
+   jain.out.80 <- add.outliers(jain[,-3],80) %>% as.data.frame()
+   
+   plot.jain.00 <- jain[,-3] %>% as.data.frame() %>%
+      cbind("legend" = Jain_Clusters$Jain %>% as.numeric() %>% c(rep(7,0)) %>% as.factor()) %>%
+      ggplot(aes(x = V1, y = V2)) +
+      geom_point(aes(color = legend)) + 
+      scale_color_manual(values=c('#E69F00','blue','darkolivegreen3')) +
+      theme_minimal() +
+      xlim(c(0,45)) +
+      ylim(c(0,35)) + 
+      ggtitle("Original Dataset") +
+      ggeasy::easy_center_title() +
+      theme(title = element_text(face="bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            legend.position = 'none')
+   
+   
+   plot.jain.20 <- jain.out.20 %>%
+      cbind("legend" = Jain_Clusters$Jain..20.outliers. %>% 
+                           as.numeric() %>% c(rep(7,20)) %>% as.factor()) %>%
+      ggplot(aes(x = V1, y = V2)) +
+      geom_point(aes(color = legend)) + 
+      scale_color_manual(values=c('#E69F00','blue','darkolivegreen3')) +
+      theme_minimal() +
+      xlim(c(0,45)) +
+      ylim(c(0,35)) + 
+      ggtitle("Outlier count = 20") +
+      ggeasy::easy_center_title() +
+      theme(title = element_text(face="bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            legend.position = 'none')
+   
+   
+   plot.jain.40 <- jain.out.40 %>%
+      cbind("legend" = Jain_Clusters$Jain..40.outliers. %>% 
+               as.numeric() %>% c(rep(7,40)) %>% as.factor()) %>%
+      ggplot(aes(x = V1, y = V2)) +
+      geom_point(aes(color = legend)) + 
+      scale_color_manual(values=c('#E69F00','red','blue','darkolivegreen3')) +
+      theme_minimal() +
+      xlim(c(0,45)) +
+      ylim(c(0,35)) + 
+      ggtitle("Outlier count = 40") +
+      ggeasy::easy_center_title() +
+      theme(title = element_text(face="bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            legend.position = 'none')
+   
+   
+   plot.jain.60 <- jain.out.60 %>%
+      cbind("legend" = Jain_Clusters$Jain..60.outliers. %>% 
+               as.numeric() %>% c(rep(7,60)) %>% as.factor()) %>%
+      ggplot(aes(x = V1, y = V2)) +
+      geom_point(aes(color = legend)) + 
+      scale_color_manual(values=c('#E69F00','blue','darkolivegreen3')) +
+      theme_minimal() +
+      xlim(c(0,45)) +
+      ylim(c(0,35)) +
+      ggtitle("Outlier count = 60") +
+      ggeasy::easy_center_title() +
+      theme(title = element_text(face="bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            legend.position = 'none')
+   
+   
+   plot.jain.80 <- jain.out.80 %>%
+      cbind("legend" = Jain_Clusters$Jain..80.outliers. %>% 
+               as.numeric() %>% c(rep(7,80)) %>% as.factor()) %>%
+      ggplot(aes(x = V1, y = V2)) +
+      geom_point(aes(color = legend)) + 
+      scale_color_manual(values=c('#E69F00','blue','darkolivegreen3')) +
+      theme_minimal() +
+      xlim(c(0,45)) +
+      ylim(c(0,35)) + 
+      ggtitle("Outlier count = 80") +
+      ggeasy::easy_center_title() +
+      theme(title = element_text(face="bold"),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            legend.position = 'none')
+   
+   gridExtra::grid.arrange(plot.jain.20, plot.jain.40, plot.jain.60, plot.jain.80,
+                           nrow = 2, ncol = 2)
+   
+   # figure1 <- multi_panel_figure(columns = 2, rows = 2, panel_label_type = "none")
+   # 
+   # figure1 %<>%
+   #    fill_panel(plot.jain.20, column = 1, row = 1) %<>%
+   #    fill_panel(plot.jain.40, column = 2, row = 1) %<>%
+   #    fill_panel(plot.jain.60, column = 1, row = 2) %<>%
+   #    fill_panel(plot.jain.80, column = 2, row = 2)
+   # 
+   # figure1
+}
+
+
+
+
 
 
