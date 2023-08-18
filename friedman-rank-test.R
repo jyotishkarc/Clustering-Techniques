@@ -18,8 +18,8 @@ friedman <- function(df){
    K <- ncol(rank.mat)
    
    Q <- 12*N/(K*(K+1)) * sum((colMeans(rank.mat) - (K+1)/2)^2)
-   
-   return(list(test.stat = Q, pval = 1 - pchisq(Q, df = K-1)))
+   print((colMeans(rank.mat) - (K + 1)/2)^2)
+   return(list(test.stat = Q, pval = 1 - pchisq(Q, df = K-1), rank.mat = rank.mat))
 }
 
 df.temp <- res_DPM[,-1]
@@ -38,7 +38,8 @@ colnames(df.temp) <- paste0('V',1:10)
 # 10: DP-MoM
 
 
-friedman(df.temp)
-friedman(df.temp %>% select(-c(V9)))
-friedman(df.temp %>% select (-c(V8,V9)))
-friedman(df.temp %>% select (-c(V5,V8,V9)))
+friedman(df.temp[1:8, ])
+friedman(df.temp[9:16, ])
+friedman(df.temp %>% select(-c(V10)))
+friedman(df.temp %>% select (-c(V9,V10)))
+friedman(df.temp %>% select (-c(V8,V9,V10)))
