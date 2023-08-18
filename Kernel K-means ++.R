@@ -84,7 +84,7 @@ kernel.km.plus.plus <- function(X, C, sigma, ground = NULL, tolerance = 1e-07)
     obj.old <- obj.new
     t <- t+1
   }
-  
+  print(t)
   asg.vector <- rep(0, N)
   for(i in 1:C)
     asg.vector <- asg.vector + i*Z[,i]
@@ -111,7 +111,7 @@ kernel.km.plus.plus <- function(X, C, sigma, ground = NULL, tolerance = 1e-07)
     print(original.plot) 
     print(dpm.plot)
   }
-  
+  if(is.null(ground) == F){
   ground <- as.numeric(ground)
   
   ARI.clus <- aricode::ARI(asg.vector, ground)
@@ -120,7 +120,8 @@ kernel.km.plus.plus <- function(X, C, sigma, ground = NULL, tolerance = 1e-07)
   print(ARI.clus)
   print(NMI.clus)
   
-  return(list("Z"=Z, "vec"=asg.vector, "count"=t, "ARI"=ARI.clus, "NMI"=NMI.clus))
+  return(list("Z"=Z, "vec"=asg.vector, "count"=t, "ARI"=ARI.clus, "NMI"=NMI.clus))}
+  return(list("Z"=Z, "vec"=asg.vector, "count"=t))
 }
 
 K <- function(u, v, sigma)
