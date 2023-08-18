@@ -19,23 +19,31 @@ df.sim.df <- read_excel("D:/All Downloads/DP-MoM Results (2).xlsx") %>% na.omit(
 #                               'Kb.MoM','RCC','DP.MoM','DP.Means','PAM','K.medians',
 #                               'SKM','K.means','Kernel.K.means','OWL-KM')
 
+colnames(df.sim.df)[9] <- "MoMPKM"
+
 df.sim.ari.long <- df.sim.df %>% 
                      # select (-c(datapoints)) %>% 
                      melt(id = "outliers")
 
-df.sim.ari.long %>% 
+(plot.ari.sim <- df.sim.ari.long %>% 
    ggplot(aes(x = outliers)) +
-   geom_line(aes(y = value, color = variable), linewidth = 0.9) +
+   # stat_smooth(aes(y = value, color = variable), method = 'lm', 
+   #             formula = y ~ poly(x, 3), se = FALSE,
+   #             linewidth = 0.9) +
+   geom_line(aes(y = value, color = variable), linewidth = 0.6) +
    geom_point(aes(y = value, color = variable), shape = "square", size = 2) +
    labs(x = "No. of Outliers", y="ARI", color = "Algorithm  ") +
-   theme_minimal() +
+   theme_light() +
    ylim(c(0,1)) + 
    theme(title = element_text(face="bold"),
          # axis.title.x = element_text("No. of Outliers"),
          # axis.title.y = element_blank(),
          # legend.position = 'none',
          # legend.text = element_text('Algorithm'),
-         legend.position = 'right')
+         legend.position = 'right'))
 
+ggsave('plot-ari-sim-light-0.6.png', 
+       width = 1259, height = 914,
+       units = "px")
 
 

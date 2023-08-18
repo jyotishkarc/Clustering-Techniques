@@ -12,27 +12,33 @@ library(reshape2)
 #                      "KM++" = c(0.4948044, 0.2919705, 0.2711893, 0.2264784),
 #                      "Kernel-KM" = c(0.58701041, 0.5179163, 0.48834578, 0.5088454))
 
-df.jain.ari.df <- read.csv("D:/All Downloads/DP-MoM Results - Sheet4.csv") %>% na.omit()
+# df.jain.ari.df <- read.csv("D:/All Downloads/DP-MoM Results - Sheet4.csv") %>% na.omit()
+df.jain.ari.df <- read_excel("D:/All Downloads/DP-MoM Results (5).xlsx") %>% na.omit()
 
-colnames(df.jain.ari.df) <- c('datapoints','outliers',
-                              'Kb.MoM','RCC','DP.MoM','DP.MoM.MAX','DP.Means','PAM','K.medians',
-                              'SKM','K.means','Kernel.K.means')
+# colnames(df.jain.ari.df) <- c('datapoints','outliers',
+#                               'Kb.MoM','RCC','DP.MoM','DP.MoM.MAX','DP.Means','PAM','K.medians',
+#                               'SKM','K.means','Kernel.K.means')
 
-df.jain.ari.long <- df.jain.ari.df %>% select (-c(datapoints, DP.MoM.MAX)) %>% melt(id = "outliers")
+df.jain.ari.long <- df.jain.ari.df %>% melt(id = "outliers")
 
-df.jain.ari.long %>% 
-   ggplot(aes(x = outliers)) +
-   geom_line(aes(y = value, color = variable), linewidth = 0.9) +
-   geom_point(aes(y = value, color = variable), shape = "square", size = 2) +
-   labs(x = "No. of Outliers", y="ARI", color = "Algorithm  ") +
-   theme_minimal() +
-   ylim(c(0,1)) + 
-   theme(title = element_text(face="bold"),
-         # axis.title.x = element_text("No. of Outliers"),
-         # axis.title.y = element_blank(),
-         # legend.position = 'none',
-         # legend.text = element_text('Algorithm'),
-         legend.position = 'right')
+(plot.ari.jain <- df.jain.ari.long %>% 
+      ggplot(aes(x = outliers)) +
+      # stat_smooth(aes(y = value, color = variable), method = 'lm', 
+      #             formula = y ~ poly(x, 3), se = FALSE,
+      #             linewidth = 0.9) +
+      geom_line(aes(y = value, color = variable), linewidth = 0.6) +
+      geom_point(aes(y = value, color = variable), shape = "square", size = 2) +
+      labs(x = "No. of Outliers", y="ARI", color = "Algorithm  ") +
+      theme_light() +
+      ylim(c(0,1)) + 
+      theme(title = element_text(face="bold"),
+            # axis.title.x = element_text("No. of Outliers"),
+            # axis.title.y = element_blank(),
+            # legend.position = 'none',
+            # legend.text = element_text('Algorithm'),
+            legend.position = 'right'))
+
+ggsave('plot-ari-jain-light-0.6.png')
 
 
 
