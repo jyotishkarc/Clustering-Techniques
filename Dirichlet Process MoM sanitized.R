@@ -1,4 +1,4 @@
-library(aricode)
+
 library(aricode)
 library(pbapply)
 library(gtools)
@@ -19,7 +19,8 @@ library(gtools)
 
 median.0 = function(u) return((sort(u))[(length(u) + 1) / 2])
 
-DP.MoM = function(X, lambda, eps, L, eta, n.0, ground = NULL, index = NULL, tol = 1e-03, tmax = 21)
+DP.MoM = function(X, lambda, eps, L, eta, n.0, ground = NULL, 
+                  index = NULL, tol = 1e-03, tmax = 21)
 {
     n = nrow(X)
     p = ncol(X)
@@ -61,7 +62,7 @@ DP.MoM = function(X, lambda, eps, L, eta, n.0, ground = NULL, index = NULL, tol 
         temp = MoM(X, B, centroids, L)
         f = temp[[1]]
         mom = temp[[2]] ## Determining the bucket corresponding to the Median-of-Means estimator
-
+        
         temp = AdaGrad(X, B, G, centroids, L, C, eps, eta, mom, t)
         G[[t]][1 : nrow(centroids), ] = temp[[2]]
         centroids = temp[[1]] ## Recomputation of the centroids using the AdaGrad algorithm
@@ -85,7 +86,7 @@ DP.MoM = function(X, lambda, eps, L, eta, n.0, ground = NULL, index = NULL, tol 
                 centroids = rbind(centroids, X[i, ])
             }
         }
-
+        
         C = length(unique(Z))
         centroids = centroids[sort(unique(Z)), ]
         v = sort(unique(Z))
@@ -152,7 +153,8 @@ DP.MoM = function(X, lambda, eps, L, eta, n.0, ground = NULL, index = NULL, tol 
         nmi.clus = aricode::NMI(ground, Z[1 : (n - n.0)])
         ari.clus = aricode::ARI(ground, Z[1 : (n - n.0)])
         return(list("Z" = Z, "C" = C, "NMI" = nmi.clus, "ARI" = ari.clus,
-                    "objective" = f.new, "Time" = t, "Indices" = indices, "Centroids" = centroids))
+                    "objective" = f.new, "Time" = t, "Indices" = indices, 
+                    "Centroids" = centroids))
     }
     return(list("Z" = Z, "C" = C, "objective" = f.new, "Centroids" = centroids))
 }
@@ -164,10 +166,10 @@ AdaGrad = function(X, B, G, centroids, L, C, eps, eta, mom, t)
     K = floor(n / L)
     rem = n %% L
     #C = nrow(centroids)
-
+    
     grad = matrix(0, C, p)
     dist = matrix(0, nrow(B[[mom]]), C)
-
+    
     for(i in 1 : nrow(B[[mom]]))
     {
         for(j in 1 : C)
@@ -346,11 +348,15 @@ parameter.optimise <- function(X, n.0, ground, eta, index = NULL)
     clus.3 <- val.third[[r.3]][[6]]
     m = max(max(ari.clus), max(ari.clus.second), max(ari.clus.third))
     if(m == max(ari.clus))
-        return(list(lambda[r.1], val[[r.1]][[3]], val[[r.1]][[2]], nmi.clus[r.1], ari.clus[r.1], val[[r.1]][[6]], val[[r.1]][[8]]))
+        return(list(lambda[r.1], val[[r.1]][[3]], val[[r.1]][[2]], nmi.clus[r.1], ari.clus[r.1],
+                    val[[r.1]][[6]], val[[r.1]][[8]]))
     else if(m == max(ari.clus.second))
-        return(list(lambda.second[r.2], val.second[[r.2]][[3]], val.second[[r.2]][[2]], nmi.clus.second[r.2], ari.clus.second[r.2], val.second[[r.2]][[6]], val.second[[r.2]][[8]]))
-    else
-        return(list(lambda.third[r.3], val.third[[r.3]][[3]], val.third[[r.3]][[2]], nmi.clus.third[r.3], ari.clus.third[r.3], val.third[[r.3]][[6]], val.third[[r.3]][[8]]))
+        return(list(lambda.second[r.2], val.second[[r.2]][[3]], val.second[[r.2]][[2]], 
+                    nmi.clus.second[r.2], ari.clus.second[r.2], val.second[[r.2]][[6]], 
+                    val.second[[r.2]][[8]]))
+    else return(list(lambda.third[r.3], val.third[[r.3]][[3]], val.third[[r.3]][[2]], 
+                    nmi.clus.third[r.3], ari.clus.third[r.3], val.third[[r.3]][[6]], 
+                    val.third[[r.3]][[8]]))
 }
 
 optimise.partitions <- function(X, lambda, n.0, ground, eta, index = NULL)
@@ -381,5 +387,6 @@ optimise.partitions <- function(X, lambda, n.0, ground, eta, index = NULL)
     j <- which.max(nmi.clus)
     r <- which.max(ari.clus)
     x <- which.min(ob.clus)
-    return(list(lambda, B[r], val[[r]]$C, nmi.clus[r], ari.clus[r], val[[r]]$Z, min(ob.clus), val[[r]]$Indices))
+    return(list(lambda, B[r], val[[r]]$C, nmi.clus[r], ari.clus[r], 
+                val[[r]]$Z, min(ob.clus), val[[r]]$Indices))
 }
