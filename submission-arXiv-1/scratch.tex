@@ -1,0 +1,285 @@
+% \section{Additional Lemmas \& their Proofs}
+% For the theoretical exposition, we first establish the following Lemmas. Lemma \ref{lemma-a1-lipschitz} proves that the derivative of the function $\phi$ is bounded in the $\ell_2$-norm when the domain is restricted to the support of $P$.
+
+% \begin{lemma}\label{lemma-a1-lipschitz}
+%     For $\bm{x},\bm{y}\in [-M,M]^p$, $\phi(\bm{u})=\|\bm{u}\|_2^2$ is $2M\sqrt{p}$-Lipschitz, i.e., \[|\phi(\bm{x})-\phi(\bm{y})|\le 2M\sqrt{p}\|\bm{x}-\bm{y}\|_2.\]
+% \end{lemma}
+
+% \begin{proof}
+%     \begin{align*}
+%        |\phi(\bm{x})-\phi(\bm{y})| &= |\|\bm{x}\|_2^2-\|\bm{y}\|_2^2|\\
+%        & = (\|\bm{x}\|_2+\|\bm{y}\|_2)|\|\bm{x}\|_2-\|\bm{y}\|_2|\\
+%        & \le (\|\bm{x}\|_2+\|\bm{y}\|_2)\|\bm{x}-\bm{y}\|_2\\
+%        & \le 2M\sqrt{p}\|\bm{x}-\bm{y}\|_2
+%     \end{align*}
+% \end{proof}
+
+
+% \begin{lemma}\label{lemma-a2}
+%     Under A\ref{ass-1-iid} and A\ref{ass-2-cluster-count}, for any $\bm{\Theta}, \bm{\Theta'}\in [-M,M]^p$, \[\|f_{\bm{\Theta}} - f_{\bm{\Theta'}}\|_{\infty}\le 4M\sqrt{p}\sum_{j=1}^{K}\|\bm{\theta}_j-\bm{\theta}_j'\|_2\]
+% \end{lemma}
+
+% \begin{proof}
+%     \begin{align*}
+%         &\|f_{\bm{\Theta}} - f_{\bm{\Theta'}}\|_{\infty}\\ &= \sup_{\bm{x}\in [-M,M]^p}\left|\Psi(d_{\phi}(\bm{x}, \bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2), \cdots, (\bm{x}, \bm{\theta}_K)) - \Psi(d_{\phi}(\bm{x}, \bm{\theta}_1'), d_{\phi}(\bm{x},\bm{\theta}_2'), \cdots, (\bm{x}, \bm{\theta}_K'))\right|\\
+%         &\le \sup_{\bm{x}\in [-M,M]^p} \sum_{j=1}^K |d_{\phi}(\bm{x}-\bm{\theta}_j) - d_{\phi}(\bm{x}-\bm{\theta}_j')|\\
+%         &\le \sup_{\bm{x}\in [-M,M]^p} \sum_{j=1}^K |\|\bm{x}-\bm{\theta}_j\|_2^2-\|\bm{x}-\bm{\theta}_j'\|_2^2|\\
+%         & \le \sup_{\bm{x}\in [-M,M]^p} \sum_{j=1}^K \|\bm{\theta}_j-\bm{\theta}_j'\|_2(\|\bm{x}-\bm{\theta}_j\|_2+\|\bm{x}-\bm{\theta}_j'\|_2)\\
+%         & \le \sum_{j=1}^K \|\bm{\theta}_j-\bm{\theta}_j'\|_2 \sup_{\bm{x}\in [-M,M]^p}(\|\bm{x}-\bm{\theta}_j\|_2+\|\bm{x}-\bm{\theta}_j'\|_2)\\
+%         & \le 4M\sqrt{p}\sum_{j=1}^K \|\bm{\theta}_j-\bm{\theta}_j'\|_2
+%     \end{align*}
+% \end{proof}
+
+
+% \section{Proofs from Section \ref{sec:theory}}
+
+
+% % \subsection{Proof of Lemma \ref{lemma-1-obtuse}}
+
+
+% \subsection{Proof of Lemma \ref{lemma-2}}
+
+% \begin{proof}
+%     Suppose $\bm{\Theta}=\{\bm{\theta}_1, \bm{\theta}_2, \cdots, \bm{\theta}_K\}$, $\mathcal{C}=[-M,M]^{K\times p}$ and $\bm{\Theta}'=\{P_{\mathcal{C}}(\bm{\theta}_1), P_{\mathcal{C}}(\bm{\theta}_2), \cdots, P_{\mathcal{C}}(\bm{\theta}_K)\}$. Evidently, $\mathcal{C}$ is a convex set. Applying Lemma \ref{lemma-1-obtuse}, we observe that 
+%     \begin{align*}
+%         & \|\bm{x}-\bm{\theta}_j\|_2^2 \ge \|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_j)\|_2^2+ \|P_{\mathcal{C}}(\bm{\theta}_j)-\bm{\theta}_j\|_2^2\ge \|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_j)\|_2^2 \hspace{0.5cm}\text{for all }j=1,2,\cdots, K\\
+%         & \implies \Psi \left(\|\bm{x}-\bm{\theta}_1\|_2^2, \cdots, \|\bm{x}-\bm{\theta}_K\|_2^2\right)\ge \Psi\left(\|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_1)\|_2^2, \cdots, \|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_K)\|_2^2\right)\\
+%         & \implies \int \Psi \left(\|\bm{x}-\bm{\theta}_1\|_2^2, \cdots, \|\bm{x}-\bm{\theta}_K\|_2^2\right) \,dQ \ge \int \Psi\left(\|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_1)\|_2^2, \cdots, \|\bm{x}-P_{\mathcal{C}}(\bm{\theta}_K)\|_2^2\right) \,dQ\\
+%         & \implies Q f_{\bm{\Theta}}\ge Q f_{\bm{\Theta}'}
+%     \end{align*}
+% \end{proof}
+
+% \subsection{Proof of Lemma \ref{lemma-3-cov-num}}
+
+% \begin{proof}
+%     Divide $[-M,M]$ into buckets, each with size $\epsilon$. Denote $\gamma_i=-M+i\epsilon,$ $i=1,2,\cdots, \left\lfloor\frac{2M}{\epsilon}\right\rfloor$ and let \[\Gamma_\epsilon=\left\{\gamma_i ~\bigg|~ i\in \left\{1,2,\cdots, \left\lfloor\frac{2M}{\epsilon}\right\rfloor\right\}\right\}\]
+    
+%     If $\epsilon>2M$, then take $\Gamma_{\epsilon}=\{0\}$. As a result $|\Gamma_{\epsilon}|=\max\left(\left\lfloor\frac{2M}{\epsilon}\right\rfloor\right)$. From the construction of $\Gamma_{\epsilon}$, for all $x\in[-M,M]$, $\exists$ $i\in [|\Gamma_{\epsilon}|]$, such that $|x-\gamma_i|\le \epsilon$. We take $\epsilon = (4MKp)^{-1} \delta$. Having defined \[\bm{\Theta}_{\delta}=\{\bm{\Theta}=((\theta_{i\ell})): \theta_{i\ell}\in \Gamma_{\epsilon}\}\] we see that \[|\bm{\Theta}_{\delta}|=\left(\max \left\{\left\lfloor\frac{2M}{\epsilon}\right\rfloor\right\}, 1\right)^{Kp}\]
+%     For any $\bm{\Theta}\in [-M,M]^{K\times p}$, we can construct $\bm{\Theta}'\in \bm{\Theta}_{\delta}$, such that $|\theta_{i\ell}-\theta'_{i\ell}|\le \epsilon$ for all $i, \ell$. From Lemma A.2 we observe that 
+%      \[\|f_{\bm{\Theta}} - f_{\bm{\Theta'}}\|_{\infty}\le 4M\sqrt{p}\sum_{j=1}^{K}\|\bm{\theta}_j-\bm{\theta}_j'\|_2\le 4M\sqrt{p}K\epsilon\sqrt{p}=4MKp\epsilon=\delta\]   
+%      Thus $\mathcal{F}_{\delta}=\{f_{\bm{\Theta}}: \bm{\Theta}\in \bm{\Theta}_{\delta}\}$ constitutes a $\delta$-cover of $\mathcal{F}$ under the $\|\cdot\|_{\infty}$ norm.
+%      \[N(\delta;\mathcal{F}, \|\cdot\|_{\infty})\le |\mathcal{F}_{\delta}|\le |\bm{\Theta}_{\delta}|=\left(\max \left\{\left\lfloor\frac{2M}{\epsilon}\right\rfloor\right\}, 1\right)^{Kp}=\left(\max \left\{\left\lfloor\frac{8M^2Kp}{\delta}\right\rfloor\right\}, 1\right)^{Kp}\]
+% \end{proof}
+
+
+% \subsection{Proof of Lemma \ref{lemma-4-diam}}
+
+% \begin{proof}
+%     \begin{align*}
+%         diam(\mathcal{F})&= \sup_{\bm{\Theta}, \bm{\Theta}'\in [-M,M]^{K\times p}}\|f_{\bm{\Theta}}- f_{\bm{\Theta}'}\|_{\infty}\\
+%         & \le 4M\sqrt{p}\sup_{\bm{\Theta}, \bm{\Theta}'\in [-M,M]^{K\times p}}\sum_{j=1}^{K}\|\bm{\theta}_j-\bm{\theta}_j'\|_2\\
+%         & \le 4M\sqrt{p}\times 2KM\sqrt{p}\\
+%         & = 8M^2Kp
+%     \end{align*}
+% \end{proof}
+
+% \subsection{Proof of Theorem \ref{thm-1-RnF}}
+
+% \begin{proof}
+%     We know by Lemma 3.4 that $\Delta=diam(\mathcal{F})\le 8M^2Kp$. We construct a decreasing sequence $\{\delta_i\}_{i\in \mathbb{N}}$ as follows. We take $\delta_1=\Delta=diam(\mathcal{F})$ and then define $\delta_{i+1}=\frac{1}{2}\delta_i$. Let $\mathcal{F}_i$ be a minimal $\delta_i$ cover of $\mathcal{F}$ i.e. $|\mathcal{F}_i|=N(\delta_i; \mathcal{F},\|\cdot\|_{\infty})$. Now, we denote $f_i$ to be the element in $\mathcal{F}_i$ closest to $f$ (with ties broken arbitrarily). We can thus write \[\mathbb{E} \sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n\epsilon_i f(\bm{X}_i)\le \xi_1+\xi_2+\xi_3\]
+%     where \[\xi_1=\mathbb{E}\sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n\epsilon_i (f(\bm{X}_i)-f_m(\bm{X}_i))\]
+%     \[\xi_2 = \sum_{j=1}^{m-1}\mathbb{E}\sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n\epsilon_i (f_{j+1}(\bm{X}_i)-f_j(\bm{X}_i))\]
+%     \[\xi_3=\mathbb{E}\sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n\epsilon_i f_1(\bm{X}_i)\]
+%     Note that since $\delta_1=diam(\mathcal{F})$, for any $f_1\in \mathcal{F}$, $\|f-f_1\|_{\infty}\le \delta_1$. Hence, the $\delta_1$ covering number of $\mathcal{F}$, $N(\delta_1;\mathcal{F},\|\|_{\infty})$ is 1. As a result, $\mathcal{F}_i$ contains only the element $f_i$ which can be chosen arbitrarily from $\mathcal{F}$. As a result \[\mathbb{E}\sup_{f\in\mathcal{F}}\frac{1}{n}\sum_{i=1}^{n}\epsilon_if_1(\bm{X}_i)=\mathbb{E}\frac{1}{n}\sum_{i=1}^{n}\epsilon_i f_{1}(\bm{X}_i)=0\]
+%     To bound $\xi_1$, we observe that \[\xi_1=\mathbb{E}\sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n\epsilon_i (f(\bm{X}_i)-f_m(\bm{X}_i))\le \mathbb{E}\sup_{f\in\mathcal{F}}\frac{1}{n}\sqrt{\left(\sum_{i=1}^n \epsilon_i^2\right)\left(\sum_{i=1}^n (f(\bm{X}_i)-f_{m}(\bm{X}_i))^2\right)}\le \delta_m\]
+%     To bound $\xi_2$, we observe that \[\|f_{j+1}-f_{j}\|_{\infty}\le \|f_{j+1}-f\|_{\infty}+\|f-f_j\|_{\infty}\le \delta_{j+1}+\delta_j\]
+%     Note that the cardinality of the set $\mathcal{F_j}^*=\{f_{j+1}-f_j: f_{j+1}\in \mathcal{F}_{j+1}, f_j\in \mathcal{F}_j\}$ will be the product of $|\mathcal{F}_{j+1}|$ and $|\mathcal{F}_j|$ i.e. the product of the $\delta_{j+1}$ and $\delta_j$ covering numbers of $\mathcal{F}$. Now, appealing to Massart's lemma (Mohri et al. (2018)), we get \begin{align*}
+%         \mathbb{E}\sup_{f\in \mathcal{F}}\frac{1}{n}\sum_{i=1}^n \epsilon_i (f_{j+1}(\bm{X}_i)- f_{j}(\bm{X}_i))&\le \frac{(\delta_{j+1}+\delta_j)\sqrt{2\log(N(\delta_{j+1};\mathcal{F}, \|.\|_{\infty})N(\delta_{j};\mathcal{F}, \|.\|_{\infty}))}}{\sqrt{n}}\\
+%         &\le \frac{2(\delta_{j+1}+\delta_j)\sqrt{\log((N(\delta_{j+1};\mathcal{F}, \|.\|_{\infty}))}}{\sqrt{n}}
+%     \end{align*}
+
+%     Thus,
+% $$
+% \xi_2=\sum_{j=1}^{m-1} \mathbb{E} \sup _{f \in \mathcal{F}} \frac{1}{n} \sum_{i=1}^n \epsilon_i\left(f_{j+1}\left(\boldsymbol{X}_i\right)-f_j\left(\boldsymbol{X}_i\right)\right) \leq \sum_{j=1}^{m-1} \frac{2\left(\delta_{j+1}+\delta_j\right) \sqrt{\log N\left(\delta_{j+1} ; \mathcal{F},\|\cdot\|_{\infty}\right)}}{\sqrt{n}}
+% $$
+% Combining the bounds on $\xi_1, \xi_2$ and $\xi_3$, we get,
+% $$
+% \mathbb{E} \sup _{f \in \mathcal{F}} \frac{1}{n} \sum_{i=1}^n \epsilon_i f\left(\boldsymbol{X}_i\right) \leq \delta_m+\frac{2}{\sqrt{n}} \sum_{j=1}^{m-1}\left(\delta_{j+1}+\delta_j\right) \sqrt{\log N\left(\delta_{j+1} ; \mathcal{F},\|\cdot\|_{\infty}\right)} .
+% $$
+% From the construction of $\left\{\delta_i\right\}_{i \geq 1}$, we know, $\delta_{j+1}+\delta_j=6\left(\delta_{j+1}-\delta_{j+2}\right)$. Hence from equation (12), we get,
+
+% \begin{align*}
+% \mathbb{E} \sup _{f \in \mathcal{F}} \frac{1}{n} \sum_{i=1}^n \epsilon_i f\left(\boldsymbol{X}_i\right) & \leq \delta_m+\frac{2}{\sqrt{n}} \sum_{j=1}^{m-1}\left(\delta_{j+1}+\delta_j\right) \sqrt{\log N\left(\delta_{j+1} ; \mathcal{F},\|\cdot\|_{\infty}\right)} \\
+% & =\delta_m+\frac{12}{\sqrt{n}} \sum_{j=1}^{m-1}\left(\delta_{j+1}-\delta_{j+2}\right) \sqrt{\log N\left(\delta_{j+1} ; \mathcal{F},\|\cdot\|_{\infty}\right)} \\
+% & \leq \delta_m+\frac{12}{\sqrt{n}} \int_{\delta_{m+1}}^{\delta_2} \sqrt{\log N\left(\epsilon ; \mathcal{F},\|\cdot\|_{\infty}\right)} d \epsilon
+% \end{align*}
+% From Lemma 3.3, plugging in the value of $N(\epsilon; \mathcal{F},\|.\|_{\infty})$, we get 
+% \begin{align*}
+%     \mathcal{R}_n(\mathcal{F})&\le \frac{12}{\sqrt{n}}\int_{0}^{\Delta}\sqrt{\log N(\epsilon; \mathcal{F},\|.\|_{\infty})}\,d\epsilon\\
+%     &\le \frac{12}{\sqrt{n}}\int_{0}^{\Delta}\sqrt{Kp\log\left(\max\left\{\frac{\Delta}{\epsilon}, 1\right\}\right)}\,d\epsilon\\
+%     &= \frac{12}{\sqrt{n}}\int_{0}^{\Delta}\sqrt{Kp\log\left(\frac{\Delta}{\epsilon}\right)}\,d\epsilon\\
+%     & = 12 \sqrt{\frac{Kp}{n}}\Delta \int_{0}^{\infty} 2t^2 e^{-t^2}\,dt\\
+%     &= 12 \sqrt{\frac{Kp}{n}}\Delta \int_{0}^{\infty} \sqrt{u}e^{-u}\,du\\
+%     & = 6\sqrt{\pi}\sqrt{\frac{Kp}{n}}\Delta\\
+%     & = 6\sqrt{\frac{\pi Kp}{n}}\times 8M^2Kp\\
+%     & = 48 \sqrt{\pi}M^2(Kp)^{3/2}n^{-1/2}
+% \end{align*}
+% \end{proof}
+
+
+% \subsection{Proof of Lemma \ref{lemma-5}}
+
+% \begin{proof}
+% %     From the non-negativity of $\Psi(.)$, we get that $\Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) )\ge 0$ for every $x\in [-M,M]^p$ and $\bm{\Theta}\in [-M,M]^{k\times p}$. Now,\begin{align*}
+% %         &\Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) )\\
+% %         &=\min_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2\\
+% %         & \le \max_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2\\
+% %         & \le 4M^2p
+% %     \end{align*}
+
+%     \begin{equation*}
+%         \Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) ) = \min_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2 \le \max_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2 \le 4M^2p
+%     \end{equation*}
+% \end{proof}
+
+
+
+% \subsection{Proof of Theorem \ref{thm-2-diff-Pn-P}}
+
+% \begin{proof}
+%     From Lemma 3.5, we observe that $\sup_{f\in \mathcal{F}}\|f\|_{\infty}\le 4M^2p$. Under assumption $A1$, for any $0<\delta<1$, with probability at least $1-\delta$, \[\sup_{f\in \mathcal{F}}|P_n f-Pf|\le 2\mathcal{R}_n(\mathcal{F})+\sup_{f\in \mathcal{F}}\|f\|_{\infty}\sqrt{\frac{\log(2/\delta)}{2n}}\le 96\sqrt{\pi}M^2(Kp)^{3/2}n^{-1/2}+4M^2p\sqrt{\frac{\log(2/\delta)}{2n}}\]
+% \end{proof}
+
+
+% \subsection{Proof of Theorem \ref{thm-3-strong-consistency}}
+
+% \begin{proof}
+% (Proof of Strong consistency) We will first show $|P f_{\hth} - P f_{\bTheta^\ast}| \xrightarrow{a.s.} 0$. To show this, let $C=\max\{192 \sqrt{\pi}M^2  (Kp)^{3/2},  8 M^2 p \}$. Then from Theorem 3.2,
+% we observe that with probability at least $1-\delta$,
+% \begin{equation}\label{q4}
+%     |Pf_{\hth} - P f_{\bTheta^\ast}|  \le \frac{C}{\sqrt{n}} + C \sqrt{\frac{\log(2/\delta)}{2n}}.
+% \end{equation}
+% Fix $\epsilon>0$. If $n \ge 4C^2/\epsilon^2$ and $\delta = 2 \exp\left(-\frac{n\epsilon^2}{2C^2}  \right)$, the RHS of \eqref{q4} becomes no bigger than $\epsilon$. Thus,
+% \[\sP \left( |Pf_{\hth} - P f_{\bTheta^\ast}| > \epsilon \right) \le 2 \exp\left(-\frac{n\epsilon^2}{2C^2}  \right), \quad \forall \, n \ge 4C^2/\epsilon^2 .\]
+% Note that the series $\sum_{n=1}^\infty \exp\left(-\frac{n\epsilon^2}{2C^2}  \right) $ is a geometric series and hence, convergent from the above equation. Therefore, we also have that $\sum_{n=1}^\infty \sP\left( |Pf_{\hth} - P f_{\bTheta^\ast}| > \epsilon \right)$ converges. Thus, by the first Borel-Cantelli lemma, $P\left(\limsup_{n\to \infty} |Pf_{\widehat{\bm{\Theta}}_n}-Pf_{\bm{\Theta^*}}|>\epsilon\right)=0$. As a result, $Pf_{\hth} \xrightarrow{a.s.} P f_{\bTheta^\ast}$. Thus, for any $\epsilon>0$, $P f_{\hth} \le  P f_{\bTheta^\ast} + \epsilon$ almost surely w.r.t. $[P]$ for $n$ sufficiently large. From assumption A3,
+% $\text{D}(\hth,\bTheta^\ast) \le  \eta$, almost surely w.r.t. $[P]$, for any prefixed $\eta>0$, and $n$ large. Thus, $\text{D}(\hth, \bTheta^\ast) \xrightarrow{a.s.}0$, which proves the result.\\
+% %\end{proof}
+% % \subsection{Proof of Theorem \ref{rootn}}
+% % \begin{proof}
+
+% (Proof of $\sqrt{n}$-consistency)
+% Fix $\delta \in (0,1]$. From Theorem 3.2, 
+% with probability at least $1-\delta$,
+% \[|Pf_{\hth} - P f_{\bTheta^\ast}|  \le 192 \sqrt{\pi} M^2  (Kp)^{3/2} n^{-1/2} + 8 M^2 p \sqrt{\frac{\log(2/\delta)}{2n}} = O(n^{-1/2}).\]
+% Hence, $\sqrt{n}\cdot|Pf_{\hth} - P f_{\bTheta^\ast}| = O(1)$ with probability at least $1-\delta$. Thus,  $\exists \, C_\delta$, such that \[\sP\left( \sqrt{n}\cdot|Pf_{\hth} - P f_{\bTheta^\ast}| \le C_\delta\right) \ge 1-\delta,\] for all $n$ large enough. Hence, $|P f_{\hth} - P f_{\bTheta^\ast}| = O_P (n^{-1/2})$.
+% \end{proof}
+
+
+
+% \subsection{Proof of Lemma \ref{lemma-6-spmom}}
+
+% \begin{proof}
+%     Suppose $\bTheta=\{\btheta_1,\dots,\btheta_k\}$. We take $\C=[-M,M]^{K \times p}$ and $\bTheta^\prime= \{P_\C(\btheta_1),\dots,P_\C(\btheta_K)\}$. Clearly $\C$ is convex. Let $\mathcal{L}\subset\{1,\dots,L\}$ be the set of all partitions which do not contain an outlier. Thus, from Lemma \ref{lemma-1-obtuse}, we observe that 
+% \begin{align*}
+%   &d_\phi(\bX_i,\btheta_j) \ge d_{\phi}(\bX_i,P_\C(\btheta_j))+d_\phi(P_\C(\btheta_j),\btheta_j) \ge d_{\phi}(\bX_i,P_\C(\btheta_j))\, \forall\, j=1,\dots,K \text{ and } i \in \mathcal{I}  \\ 
+%   \implies & \Psi_{\balpha}\left(d_\phi(\bX_i,P_\C(\btheta_1)),\dots,d_\phi(\bX,P_\C(\btheta_K))\right) \le \Psi_{\balpha}\left(d_\phi(\bX_i,\btheta_1),\dots,d_\phi(\bX,\btheta_K)\right)\, \forall \, i \in \I\\
+%   \implies & \sum_{i \in B_\ell}\Psi_{\balpha}\left(d_\phi(\bX_i,P_\C(\btheta_1)),\dots,d_\phi(\bX,P_\C(\btheta_K))\right) \le \sum_{i \in B_\ell} \Psi_{\balpha}\left(d_\phi(\bX_i,\btheta_1),\dots,d_\phi(\bX,\btheta_K)\right)\, \forall \, \ell \in \mathcal{L}\\
+%   \implies & \frac{1}{b} \sum_{i \in B_\ell} f_{\bTheta^\prime }(\bX_i)\le \frac{1}{b} \sum_{i \in B_\ell} f_{\bTheta }(\bX_i)\,\forall \, \ell \in \mathcal{L}
+% \end{align*}
+% Now since $|\mathcal{L}| > |\mathcal{L}^C|$ (from assumption \ref{ass-5-L}), 
+% \begin{align*}
+%     & \text{Median}\left( \frac{1}{b} \sum_{i \in B_1} f_{\bTheta^\prime}(\bX_i), \dots, \frac{1}{b} \sum_{i \in B_L} f_{\bTheta^\prime}(\bX_i)\right) \le \text{Median}\left( \frac{1}{b} \sum_{i \in B_1} f_{\bTheta}(\bX_i), \dots, \frac{1}{b} \sum_{i \in B_L} f_{\bTheta}(\bX_i)\right) \\
+%      & \implies \text{MoM}_L^n(\bTheta^\prime) \le \text{MoM}_L^n(\bTheta)
+% \end{align*}
+% \end{proof}
+
+
+% \subsection{Proof of Theorem \ref{thm-4-MoM}}
+
+% \begin{proof} 
+% For notational simplicity let  $P_{B_\ell}$ denote the empirical distribution of $\{\bX_i\}_{i \in B_\ell}$. Suppose $\epsilon>0$. We will first bound the probability of $\sup_{\bTheta \in [-M,M]^{K \times p}} |\text{MoM}_L^n (f_{\bTheta}) - P f_{\bTheta} |> \epsilon$. To do so, we will individually bound the probabilities of the events 
+% $$\sup_{\bTheta \in [-M,M]^{K \times p}}( \text{MoM}_L^n (f_{\bTheta}) - P f_{\bTheta}) >\epsilon$$ and $$\sup_{\bTheta \in [-M,M]^{K \times p}}  ( P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) > \epsilon.$$ 
+% We note that if \[ \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2},
+% \] then \[\sup_{\bTheta \in [-M,M]^{K \times p}}  ( P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) > \epsilon.\] 
+% To see this, suppose on the contrary that \[\sup_{\bTheta \in [-M,M]^{K \times p}}  ( P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) \le \epsilon\] but \[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2}\]. Then for all $\bm{\Theta}\in [-M,M]^{K\times p}$, we must have \[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2}\] which implies that for all $\bm{\Theta}\in [-M,M]^{K\times p}$ \[\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} \le \epsilon\right\} \ge \frac{L}{2}\implies \sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \le \frac{L}{2}\] which in turn implies that \[\sup_{\bTheta \in [-M,M]^{k \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \le \frac{L}{2}\] which is a contradiction. Here again $\one\{\cdot\}$ denote the indicator function. Now let $\varphi(t) = (t-1) \one\{1 \le t \le 2\} + \one\{t >2\}$. Clearly,
+% \begin{equation}
+%     \label{eq6}
+%     \one\{t \ge 2\} \le \varphi(t) \le \one\{t \ge 1\}.
+% \end{equation} We observe that, 
+% \begingroup
+% \allowdisplaybreaks
+% \begin{align}
+%     & \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\}  \nonumber\\
+%     \le & \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL} \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} + |\cO|\nonumber\\
+%     \le & \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) + |\cO|\nonumber\\
+%     \le & \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)  + |\cO|\nonumber\\
+%     & +\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)   - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg]. \label{eq01}
+% \end{align}
+% \endgroup
+% To bound $\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\}$, we will first bound the quantity $\E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)$. We observe that, 
+% \begingroup
+% \allowdisplaybreaks
+% % \begin{align}
+% % \small 
+% %   \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) 
+% %   \le  \E \left[ \one\left\{\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon} > 1 \right\}\right] \nonumber  = & \sP \left[ (P-P_{B_\ell})f_{\bTheta}>\frac{\epsilon}{2} \right] \nonumber \\ 
+% %   \le & \exp\left\{-\frac{b \epsilon^2}{32 M^4 K^2 p^2}\right\}
+% % \end{align} 
+% \begin{equation}
+%     \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \le  \E \left[ \one\left\{\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon} > 1 \right\}\right] = \sP \left[ (P-P_{B_\ell})f_{\bTheta}>\frac{\epsilon}{2} \right] \le \exp\left\{-\frac{b \epsilon^2}{32 M^4 K^2 p^2}\right\}
+% \end{equation}
+
+% The last inequality follows by Hoeffding's inequality after observing that $\displaystyle \mathbb{E}P_{B_{\ell}}f_{\bm{\Theta}}=Pf_{\bm{\Theta}}$ and by Lemma 3.5.
+% \endgroup
+%  We now turn to bounding the term \[ \sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)   - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg]. \] Appealing to Theorem 26.5 of \citep{shalev-shwartz_ben-david_2014} we observe that, with probability at least $1-2e^{-L \delta^2/2}$, for all $ \bTheta \in [-M,M]^{k \times p}$,
+% \begin{align}
+%   &\frac{1}{L}\sum_{\ell \in \cL}   \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \nonumber \\
+%   \le & \E\left[\frac{1}{L}\sum_{\ell \in \cL}  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \right]  + 2\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\frac{1}{L}\sum_{\ell \in \cL}\sigma_\ell  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \right] + \delta.  \label{eq5}
+% \end{align}
+% Here $\{\sigma_\ell\}_{\ell \in \mathcal{L}}$ are i.i.d. Rademacher random variables. Let $\{\xi_i\}_{i=1}^n$ be i.i.d. Rademacher random variables, independent form  $\{\sigma_\ell\}_{\ell \in \mathcal{L}}$. From equation \eqref{eq5}, we get,  
+% \begingroup
+% \allowdisplaybreaks
+% \begin{align}
+%      & \frac{1}{L}\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)  - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg] \nonumber\\
+%      \le & 2\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\frac{1}{L}\sum_{\ell \in \cL}\sigma_\ell  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \right] + \delta \nonumber \\
+%      \le & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}\sigma_\ell  (P-P_{B_\ell})f_{\bTheta} \right]+ \delta. \label{eq7} 
+%      \end{align}
+%      Equation \eqref{eq7} follows from the fact that $\varphi(\cdot)$ is 1-Lipschitz and appealing to Lemma 26.9 of \cite{shalev-shwartz_ben-david_2014}. We now consider a ``ghost" sample $\mathcal{X}^\prime=\{\bX_1^\prime, \dots, \bX_n^\prime\}$, which are i.i.d. and follow the probability law $P$. Thus, equation \eqref{eq7} can be further shown to give
+%      \begin{align}
+%      = & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}\sigma_\ell  \E_{\mathcal{X}^\prime}\left((P^\prime_{B_\ell}-P_{B_\ell})f_{\bTheta}\right) \right]+ \delta \nonumber \\
+%      \le & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}\sigma_\ell  (P^\prime_{B_\ell}-P_{B_\ell})f_{\bTheta} \right]+ \delta \nonumber \\
+%      & \text{This inequality follows by employing Jensen's inequality as supremum is a convex function,}\nonumber\\ & \text{and the expectation in the second step is taken with respect to both the original sample $\mathcal{X}$}\nonumber\\ & \text{as well as the ghost sample $\mathcal{X}'$ and the Rademacher random variables $\{\sigma_{\ell}\}_{\ell\ge 1}$.}\nonumber\\
+%      = & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}\sigma_\ell  \frac{1}{b}\sum_{i \in B_\ell}(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \nonumber \\
+%      = & \frac{4}{b L \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}\sigma_\ell  \sum_{i \in B_\ell} \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \label{eq8} \\
+%      = & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell \in \cL}  \sum_{i \in B_\ell} \sigma_\ell \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \nonumber \\
+%      = & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i (f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \label{eq9} \\
+%      \le &  \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i^\prime)+ \sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta\\
+%      \le & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i^\prime)\right]+\E\left[ \sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta\\
+%      = & \frac{8}{n \epsilon}\E\left[\sup_{\bTheta \in [-M,M]^{K \times p}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta \nonumber \\
+%      \le & \frac{8}{n \epsilon} 48 \sqrt{\pi}  M^2  (Kp)^{3/2}  \sqrt{|\J|} + \delta \label{eq10} \\
+%      \le & \frac{384}{n \epsilon}  \sqrt{\pi}  M^2  (Kp)^{3/2} \sqrt{|\I|} + \delta. \label{eq11}
+% \end{align}
+% \endgroup
+
+% Here $\J$ is the set of observations in the partitions not containing an outlier. Equation \eqref{eq8} follows from observing that  $(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \overset{d}{=} \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i))$. In equation \eqref{eq9}, $\{\gamma_i\}_{i \in \mathcal{J}}$ are independent Rademacher random variables due to their construction. Equation \eqref{eq10} follows from appealing to Theorem \ref{thm-1-RnF}.
+% Thus, combining equations \eqref{eq5}, \eqref{eq7}, and \eqref{eq11}, we conclude that,  with probability of at least $1-2e^{-L \delta^2/2}$, 
+% \begin{align}
+%     &\sup_{\bTheta \in [-M,M]^{K \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \nonumber \\
+%   &\le  L \left( \exp\left\{-\frac{b \epsilon^2}{32  M^4 K^2 p^2}\right\}+ \frac{|\cO|}{L} + \frac{384}{n \epsilon}  \sqrt{\pi} M^2  (Kp)^{3/2} \sqrt{|\I|} + \delta\right). \label{eq12}
+% \end{align}
+
+% We choose $\delta = \frac{2}{4+\eta} - \frac{|\cO|}{L}$ and $$\epsilon = \max\left\{\sqrt{32  M^4 \log\left(\frac{4(\eta+4)}{\eta}\right)}Kp\sqrt{\frac{L}{n}}, \frac{1536(\eta+4)  M^2 \sqrt{\pi}}{\eta} (Kp)^{3/2} \frac{\sqrt{|\I|}}{n}\right\}.$$ This makes the right hand side of \eqref{eq12} strictly smaller than $\frac{L}{2}$.
+% % In the unusual situation where you want a paper to appear in the
+% % references without citing it in the main text, use \nocite
+% %\nocite{langley00}
+% Thus, we have shown that 
+% \begin{align*}
+%      \sP\left( \sup_{\bTheta \in [-M,M]^{K \times p}} (Pf_{\bTheta} - \text{MoM}^n_L (f_{\bTheta}))> \epsilon \right) \le 2e^{-L \delta^2/2}.
+%  \end{align*}
+% % \begin{align*}
+% %     &P\left( \sup_{\bTheta \in [-M,M]^{k \times p}} (Pf_{\bTheta} - \text{MoM}^n_L (f_{\bTheta}))> \epsilon \right) \\
+% %     & \le P\left(\sup_{\bTheta \in [-M,M]^{k \times p}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \ge L/2\right) \le e^{-2L \delta^2}.
+% % \end{align*}
+% Similarly, we can show that,
+% \begin{align*}
+%     \sP\left( \sup_{\bTheta \in [-M,M]^{K \times p}} (\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} ) > \epsilon \right) \le 2e^{-L \delta^2/2}.
+% \end{align*}
+% Combining the above two inequalities, we get, 
+% \[\sP\left( \sup_{\bTheta \in [-M,M]^{K \times p}} |\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} | > \epsilon \right) \le 4e^{-L \delta^2/2}.\]
+% In other words, with at least probability $1-4e^{-L \delta^2/2}$,
+% \begin{align*}
+%     & \sup_{\bTheta \in [-M,M]^{K \times p}} |\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} | \\
+%     \le & \max\left\{\sqrt{32  M^4 \log\left(\frac{4(\eta+4)}{\eta}\right)}Kp\sqrt{\frac{L}{n}}, \frac{1536(\eta+4)  M^2 \sqrt{\pi}}{\eta} (Kp)^{3/2} \frac{\sqrt{|\I|}}{n}\right\}\\
+%     \lesssim &  \max\left\{ Kp\sqrt{\frac{L}{n}}, (Kp)^{3/2}  \frac{\sqrt{|\I|}}{n}\right\}.
+% \end{align*}
+% \end{proof}
