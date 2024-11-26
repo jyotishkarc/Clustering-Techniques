@@ -1,0 +1,74 @@
+% IJCAI 2024 Author's response
+
+% Template file with author's response
+
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+\usepackage{ijcai24-authors-response}
+
+
+\usepackage{times}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\urlstyle{same}
+
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+% \noindent\fbox{
+% 	\parbox{\linewidth}{
+% 		{\bf IMPORTANT NOTE (YOU CAN DELETE IT AFTER READING)}
+
+% 		The response to the reviews {\bf cannot} include links to external resources. Your paper may be summarily rejected if you include such links in your response.
+
+% 		Furthermore, it {\bf must be one page-only} and use this template without altering fonts, font sizes, or margins.
+
+% 		In our experience, it is more efficient to focus on explicit questions asked in the reviews (especially those listed in the box ``Questions for the authors response'') than to enter into an argument with the reviewers about the significance/novelty of your results. However, feel free to use this space as you see fit, subject to the constraints above.
+% 	}
+% }
+
+\section*{Rebuttal}
+% IJCAI-ECAI 2022 Author's response
+
+% Template file with author's response
+
+
+We sincerely thank the reviewers for a mostly positive evaluation of our work and constructive feedback.\\
+\textbf{R1 - Q1: Upper bound on $K$} The upper bound $K$ on the number of clusters can be controlled using the penalty parameter $\lambda$. Typically as $\lambda$ increases, points not very close to each other tend to be grouped into the same cluster thereby making the value of $K$ shrink.  \\
+\textbf{R1 - Q2: Choice of $b$ and $L$} We usually choose $L$ to be in the order of the number of data points $n$, in order to robustify the algorithm.\\
+\textbf{R1 - Q3: Breakdown point and assumption A.5} The breakdown point of the median of means estimator is $[(L-1)/2]/n$ as shown in \citep{rodriguez2019breakdown}. In light of this, assumption A.5 which requires the number of outliers $|\mathcal{O}|$ to be less than half the number of partitions $L$ assumes that the median of means estimator and hence the centroid estimates do not break down.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{R2 - Q1: Choice of parameter $\lambda$} hello\\
+\textbf{R2 - Q2: Regarding the concept of the shadow of the Kernel function} hrlloorh\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{R2 - Q3: Superiority of the QMS++} While QMS++ uses the same kernel as MS++, its clustering accuracy is slightly better due to the following reasons. \textit{1)} the floor function relies heavily on the accuracy of the points, for example $\lim_{\alpha \to a^{-}} \floor*{\alpha} \neq \lim_{\beta \to a^{+}} \floor*{\beta}$ for $\alpha \approx \beta$. According to IEEE 754 standards, floating-point operations incur round-off errors that increase with the number of floating-point operations. QMS++ uses fewer floating-point operations than MS++, so points are slightly more accurate in QMS++. Thus, QMS++'s clustering accuracy is therefore slightly better than MS++'s in most cases. \textit{2)} QMS++ can escape from non-smooth points. However, these non-smooth points become noise in MS++ as a result clustering accuracy degrades. We do not discuss the first reason in the paper as it is the limitation of the computational resources that exist. Ideally, QMS++ and MS++ should produce the same cluster accuracy if non-smooth points do not exist in the datasets. In response to the reviewer's comment, we add further details of this note in the supplementary files.\\
+\textbf{R2, Factual Error 1: The kernel function $K_M$ and $g(.)$ are not in the relation of a kernel and its shadow} 
+According to Definition 3 of Cheng, IEEE T-PAMI, 17(8), 790-799, 1995, $K_M$ is said to be a shadow of g(.), if the MS uses following step: $ z = \frac{\sum_{i=1}^M x_i g(z,x_i;w)}{\sum_{i=1}^M g(z,x_i;w)}$. From Eqn. (4), we can define $g(z,x_i;w) = \mathcal{I}(z,x_i;w)$. Therefore, $K_M$ and $g(.)$ provide the kernel and its shadow property.
+\\
+\textbf{R2, Factual Error 2: $K_M$ does not necessarily satisfy the non-negativity condition in (1)} 
+To prove non-negativity, we need to calculate minimum value of $K_M(z,x;w)$ within the range $\mathcal{I}(z,x;w) = 1$, i.e. finding the maximum value of $\norm{z-x}^2$ subject to $\mathcal{I}(z,x;w) = 1$. The solution of this optimization problem is $z_i  \rightarrow (x_i+2h)^{-}$, $i = 1,2,\ldots, d$. Then maximum value of $\norm{z-x}^2$ tends to $(4dh^2)^{-}$, i.e. tends to $(w^2)^{-}$ because we set $h = \frac{w}{2\sqrt{d}}$. Therefore, minimum value of $K_M(z,x;w)$ tends to $0^{+}$ within the range $\mathcal{I}(z,x;w) = 1$ and it is $0$ outside the range $\mathcal{I}(z,x;w) = 1$, which proves the non-negativity of $K_M$.\\
+\textbf{R3 - Q1: Description of max$\left\{\frac{x_j}{h}-\floor*{\frac{x_i}{h}}\right\} = 2$ in Algorithm-2} In this step, we find the all data points $i$ for each $j$ where $i,j \in \{1,2,\ldots,m\}$, which satisfy the max$\left\{\frac{x_j}{h}-\floor*{\frac{x_i}{h}}\right\} = 2$. In the final version, we describe the implementation of this step in more details.
+\\
+\textbf{R4, General Question} Initially, we carried out experiments with high-dimensional and noisy datasets to demonstrate the advantage of the proposed scheme over MS with other partitioning schemes. These results are not presented in the paper to make it easier to read and to comply with page restrictions. However, in the line of suggestions, these results will be included in the supplementary file of the final version.\\
+\textbf{R4 - Q1: Impact on the high-dimensional data} The time complexity of QMS++ is in cubic order of the data dimension. Thus, it may not be an efficient choice for high-dimensional datasets. However, our primary experiments indicate that QMS++ is similar to conventional MS for high-dimensional datasets but not much more efficient. Therefore, we focus only on large-scale low-dimensional clustering applications such as image segmentation in this paper, as QMS++ runs in linear time \textit{wrt} the number of data points.\\
+\textbf{R4 - Q2: Comparison to other fast partition-based methods} For large-scale low-dimensional datasets, state-of-the-art fast partitioning algorithms (such as KD Tree, Brute Force, and Ball Tree) require $\mathcal{O}(n^2d)$ time per iteration. In contrast, QMS++ or MS++ require $\mathcal{O}(nd^3)$ time per iteration. Moreover, we can further reduce the computational cost by eliminating duplicate computations. This only applies to this partitioning scheme. Thus, it is better suited for large-scale low-dimensional clustering than other state-of-the-art schemes.\\
+\textbf{R4 - Q3: Noise impact on the quality} To eliminate the impact of noise on clustering, several noise-handling techniques have been proposed in the literature and incorporated into various MS variants. Even though we do not propose any denoising scheme in this paper, state-of-the-art noise handling methods can be incorporated before shifting the operation of the QMS++ to deal with noisy datasets. As per suggestion, we will add these results in the supplementary file of the final version.
+
+\end{document}
+
+
+
+

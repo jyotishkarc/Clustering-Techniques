@@ -1,0 +1,9 @@
+We wish to express our concerns about some issues raised by Reviewer #3 (R3), which might be based on misapprehension, and might affect the fair assessment of our work. Given the mostly positive feedback from all other reviewers, we kindly request your expertise on this matter.
+
+1) Having made no distributional assumption on ARIs, we employed non-paramteric statistical tests only. R3 suggested to use T-test which would be invalid due to the non-normality of ARIs in general.
+
+2) R3's comment on our algorithm's performance being subjectively assessed is misplaced. We provided concise statistical evidence showing its superiority over competitors.
+
+3) Our paper never claims that our method is specifically designed for high-dimensional datasets, contrary to R3's remark. The observed efficacy in high dimensions is an additional, positive outcome.
+
+We already provided all proofs, code and data as supplementary material, and described our experimental setup too, contrary to what R3 remarked.

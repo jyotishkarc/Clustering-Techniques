@@ -1,0 +1,541 @@
+%%%% ijcai24.tex
+
+\typeout{IJCAI--24 Instructions for Authors}
+
+% These are the instructions for authors for IJCAI-24.
+
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+
+
+
+% The file ijcai24.sty is a copy from ijcai22.sty
+% The file ijcai22.sty is NOT the same as previous years'
+\usepackage{ijcai24}
+
+% Use the postscript times font!
+\usepackage{times}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[switch]{lineno}
+
+% Comment out this line in the camera-ready submission
+\linenumbers
+
+\urlstyle{same}
+
+
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage[usenames,dvipsnames]{xcolor} %more pre-named colors
+%\usepackage{kpfonts}
+\usepackage{wrapfig}
+
+\def\Real{\mathop{\mathbb{R}}\nolimits}
+\def\dom{\mathop{\bf dom}\nolimits}
+\def\argmin{\mathop{\rm argmin}\nolimits}
+\def\argmax{\mathop{\rm argmax}\nolimits}
+\newcommand{\svskip}{\vspace{1.75mm}}
+\newcommand{\ba}{\boldsymbol{a}}
+\newcommand{\bb}{\boldsymbol{b}}
+\newcommand{\bc}{\boldsymbol{c}}
+\newcommand{\bd}{\boldsymbol{d}}
+\newcommand{\be}{\boldsymbol{e}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bg}{\boldsymbol{g}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bi}{\boldsymbol{i}}
+\newcommand{\bj}{\boldsymbol{j}}
+\newcommand{\bk}{\boldsymbol{k}}
+\newcommand{\bl}{\boldsymbol{l}}
+% \newcommand{\bm}{\boldsymbol{m}}
+\newcommand{\bn}{\boldsymbol{n}}
+\newcommand{\bo}{\boldsymbol{o}}
+\newcommand{\bp}{\boldsymbol{p}}
+\newcommand{\bq}{\boldsymbol{q}}
+\newcommand{\br}{\boldsymbol{r}}
+\newcommand{\bs}{\boldsymbol{s}}
+\newcommand{\bt}{\boldsymbol{t}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\bz}{\boldsymbol{z}}
+\newcommand{\bmu}{\boldsymbol{\mu}}
+\newcommand{\bA}{\boldsymbol{A}}
+\newcommand{\bB}{\boldsymbol{B}}
+\newcommand{\bC}{\boldsymbol{C}}
+\newcommand{\bD}{\boldsymbol{D}}
+\newcommand{\bE}{\boldsymbol{E}}
+\newcommand{\bF}{\boldsymbol{F}}
+\newcommand{\bG}{\boldsymbol{G}}
+\newcommand{\bH}{\boldsymbol{H}}
+\newcommand{\bI}{\boldsymbol{I}}
+\newcommand{\bJ}{\boldsymbol{J}}
+\newcommand{\bK}{\boldsymbol{K}}
+\newcommand{\bL}{\boldsymbol{L}}
+\newcommand{\bM}{\boldsymbol{M}}
+\newcommand{\bN}{\boldsymbol{N}}
+\newcommand{\bO}{\boldsymbol{O}}
+\newcommand{\bP}{\boldsymbol{P}}
+\newcommand{\bQ}{\boldsymbol{Q}}
+\newcommand{\bR}{\boldsymbol{R}}
+\newcommand{\bS}{\boldsymbol{S}}
+\newcommand{\bT}{\boldsymbol{T}}
+\newcommand{\bU}{\boldsymbol{U}}
+\newcommand{\bV}{\boldsymbol{V}}
+\newcommand{\bW}{\boldsymbol{W}}
+\newcommand{\bX}{\boldsymbol{X}}
+\newcommand{\bY}{\boldsymbol{Y}}
+\newcommand{\bZ}{\boldsymbol{Z}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+%\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\bgamma}{\boldsymbol{\gamma}}
+\newcommand{\bdelta}{\boldsymbol{\delta}}
+\newcommand{\bepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\blambda}{\boldsymbol{\lambda}}
+\newcommand{\bnu}{\boldsymbol{\nu}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\bpi}{\boldsymbol{\pi}}
+\newcommand{\bsigma}{\boldsymbol{\sigma}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\bGamma}{\boldsymbol{\rho}}
+\newcommand{\bDelta}{\boldsymbol{\Delta}}
+\newcommand{\bTheta}{\boldsymbol{\Theta}}
+\newcommand{\bLambda}{\boldsymbol{\Lambda}}
+\newcommand{\bXi}{\boldsymbol{\Xi}}
+\newcommand{\bPi}{\boldsymbol{\Pi}}
+\newcommand{\bOmega}{\boldsymbol{\Omega}}
+\newcommand{\bUpsilon}{\boldsymbol{\Upsilon}}
+\newcommand{\bPhi}{\boldsymbol{\Phi}}
+\newcommand{\bPsi}{\boldsymbol{\Psi}}
+\newcommand{\bSigma}{\boldsymbol{\Sigma}}
+\newcommand{\ha}{\hat{\balpha}}
+\newcommand{\hb}{\hat{\bbeta}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\add}[1]{{\color{red}{#1}}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\J}{\mathcal{J}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\lc}{\tau_{\balpha,k}}
+%\newcommand{P}{\mathbb{P}}
+\newcommand{\hth}{\widehat{\bTheta}_n}
+\newcommand{\tm}{\widehat{\bTheta}_n^{(\text{MoM})}}
+\usepackage{bm}
+\usepackage{bbm}
+\newcommand{\C}{\mathcal{C}}
+% \newcommand{\bm}{\boldsymbol{#1}}
+\newcommand{\sP}{\mathbbm{P}}
+% \newcommand{\Pn}{\mathbbm{P}_n}
+
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{multirow}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{cor}{Corollary}[section]
+\newtheorem{assumption}{A\hspace{-2pt}}
+\newtheorem{remark}{\textbf{Remark}}
+\newtheorem{eg}{Example}[section]
+\newtheorem{defn}{Definition}
+
+\newcommand{\one}{\mathbbm{1}}
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
+% \usepackage{algpseudocode}
+
+
+\usepackage{comment}
+
+\usepackage{mathrsfs}
+
+\allowdisplaybreaks
+
+% the following package is optional:
+%\usepackage{latexsym}
+
+% See https://www.overleaf.com/learn/latex/theorems_and_proofs
+% for a nice explanation of how to define new theorems, but keep
+% in mind that the amsthm package is already included in this
+% template and that you must *not* alter the styling.
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+% Following comment is from ijcai97-submit.tex:
+% The preparation of these files was supported by Schlumberger Palo Alto
+% Research, AT\&T Bell Laboratories, and Morgan Kaufmann Publishers.
+% Shirley Jowell, of Morgan Kaufmann Publishers, and Peter F.
+% Patel-Schneider, of AT\&T Bell Laboratories collaborated on their
+% preparation.
+
+% These instructions can be modified and used in other conferences as long
+% as credit to the authors and supporting agencies is retained, this notice
+% is not changed, and further modification or reuse is not restricted.
+% Neither Shirley Jowell nor Peter F. Patel-Schneider can be listed as
+% contacts for providing assistance without their prior permission.
+
+% To use for other conferences, change references to files and the
+% conference appropriate and use other authors, contacts, publishers, and
+% organizations.
+% Also change the deadline and address for returning papers and the length and
+% page charge instructions.
+% Put where the files are available in the appropriate places.
+
+
+% PDF Info Is REQUIRED.
+
+% Please leave this \pdfinfo block untouched both for the submission and
+% Camera Ready Copy. Do not include Title and Author information in the pdfinfo section
+\pdfinfo{
+/TemplateVersion (IJCAI.2024.0)
+}
+
+\title{Technical Appendix for ``Robust and Automatic Data Clustering: Dirichlet Process meets Median-of-Means"}
+
+
+% Single author syntax
+\author{
+    Anonymous Authors
+    \affiliations
+    Anonymous Affiliation
+    \emails
+    Anonymous Emails
+}
+
+% Multiple author syntax (remove the single-author syntax above and the \iffalse ... \fi here)
+\iffalse
+\author{
+First Author$^1$
+\and
+Second Author$^2$\and
+Third Author$^{2,3}$\And
+Fourth Author$^4$\\
+\affiliations
+$^1$First Affiliation\\
+$^2$Second Affiliation\\
+$^3$Third Affiliation\\
+$^4$Fourth Affiliation\\
+\emails
+\{first, second\}@example.com,
+third@other.example.com,
+fourth@example.com
+}
+\fi
+
+\begin{document}
+
+
+\onecolumn
+\appendix
+
+\begin{center}
+    \LARGE{\bfseries Supplementary Material}
+\end{center}
+\vspace{1cm}
+
+% \section{Introduction}
+
+\section{An Additional Lemma}
+
+\begin{lemma}\label{lemma-bound-Psi}
+    For all $\bm{x}\in [-M,M]^p$ and $\bm{\Theta}\in \mathscr{G}$, \[0\le \Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) )\le 4M^2p.\]
+    Consequently, $\sup_{f\in \mathcal{F}}\|f\|_{\infty}\le 4M^2p$.
+\end{lemma}
+
+\begin{proof}
+%     From the non-negativity of $\Psi(.)$, we get that $\Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) )\ge 0$ for every $x\in [-M,M]^p$ and $\bm{\Theta}\in [-M,M]^{k\times p}$. Now,\begin{align*}
+%         &\Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) )\\
+%         &=\min_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2\\
+%         & \le \max_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2\\
+%         & \le 4M^2p
+%     \end{align*}
+    Firstly,
+    \begin{equation*}
+        \Psi(d_{\phi}(\bm{x},\bm{\theta}_1), d_{\phi}(\bm{x},\bm{\theta}_2),\cdots, d_{\phi}(\bm{x},\bm{\theta}_K) ) = \min_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2 \le \max_{1\le j\le K}\|\bm{x}-\bm{\theta}_j\|_2^2 \le 4M^2p.
+    \end{equation*}
+
+    Since $\bm{x}$ is arbitrary, the second part of the lemma follows immediately.
+\end{proof}
+
+\section{Proofs from Section \ref{sec:theory}}
+
+
+\subsection{Proof of Theorem \ref{thm-2-diff-Pn-P}}
+
+\begin{proof}
+    From Lemma \ref{lemma-bound-Psi}, we see that $\sup_{f\in \mathcal{F}}\|f\|_{\infty}\le 4M^2p$. Thanks to Theorem 4.10 of \cite{wainwright_2019}, for any $\delta \in (0,1)$, with probability at least $1-\delta$, 
+    \begin{align*}
+        \sup_{f\in \mathcal{F}}|P_n f-Pf| &\le 2\cdot\mathcal{R}_n(\mathcal{F})+\sup_{f\in \mathcal{F}}\|f\|_{\infty}\sqrt{\frac{2\log(2/\delta)}{n}}\\
+        &\le 96\sqrt{\pi}M^2(Kp)^{3/2}n^{-1/2}+4\sqrt{2}M^2p\log^{\tfrac{1}{2}}\left(\frac{2}{\delta}\right) n^{-1/2}.
+    \end{align*}
+\end{proof}
+
+
+\subsection{Proof of Theorem \ref{thm-4-MoM}}
+
+\begin{proof} 
+We represent the empirical distribution of $\{\bX_i\}_{i \in B_\ell}$ by $P_{B_{\ell}}$. Fix $\epsilon>0$. We will first establish a concentration inequality on $\sup_{\bTheta \in \mathscr{G}} |\text{MoM}_L^n (f_{\bTheta}) - P f_{\bTheta} |$. To that end, we bound the probabilities of the events $\{\sup_{\bTheta \in \mathscr{G}}(\text{MoM}_L^n (f_{\bTheta}) - P f_{\bTheta}) >\epsilon\}$ and $\{\sup_{\bTheta \in \mathscr{G}}  ( P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) > \epsilon\}$ individually. Note that 
+\begin{equation}
+\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2} \implies \sup_{\bTheta \in \mathscr{G}} (P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) > \epsilon.
+\end{equation}
+To see this, suppose on the contrary that \[\sup_{\bTheta \in \mathscr{G}}  (P f_{\bTheta} - \text{MoM}_L^n (f_{\bTheta})) \le \epsilon\] but \[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2}\]. 
+Then for all $\bm{\Theta}\in \mathscr{G}$, we must have \[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} > \frac{L}{2}\] which implies that for all $\bm{\Theta}\in \mathscr{G}$ \[\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} \le \epsilon\right\} \ge \frac{L}{2} \implies \sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \le \frac{L}{2}\] which in turn implies that \[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \le \frac{L}{2}\] which is a contradiction. Let $\varphi(t) = (t-1) \one\{1 \le t \le 2\} + \one\{t >2\}$ where $\one\{\cdot\}$ is the indicator function. Evidently,
+\begin{equation}
+    \label{eq6}
+    \one\{t \ge 2\} \le \varphi(t) \le \one\{t \ge 1\}.
+\end{equation} 
+We observe that
+\begingroup
+\allowdisplaybreaks
+\begin{align}
+    \sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\}
+    % \le & \sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL} \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} + |\cO|\nonumber\\
+    % \le & \sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) + |\cO|\nonumber\\
+    & \le \sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)  + |\cO|\nonumber\\
+    & ~+\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)   - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg]. \label{eq01}
+\end{align}
+\endgroup
+Towards bounding $\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\}$, we first bound $\E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)$. Note that
+\begingroup
+\allowdisplaybreaks
+% \begin{align}
+% \small 
+%   \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) 
+%   \le  \E \left[ \one\left\{\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon} > 1 \right\}\right] \nonumber  = & \sP \left[ (P-P_{B_\ell})f_{\bTheta}>\frac{\epsilon}{2} \right] \nonumber \\ 
+%   \le & \exp\left\{-\frac{b \epsilon^2}{32 M^4 K^2 p^2}\right\}
+% \end{align} 
+\begin{equation*}
+    \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \le  %\E \left[ \one\left\{\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon} > 1 \right\}\right] = 
+    \sP \left[ (P-P_{B_\ell})f_{\bTheta}>\frac{\epsilon}{2} \right] \le \exp\left\{-\frac{b \epsilon^2}{32 M^4 K^2 p^2}\right\}.
+\end{equation*}
+
+The last inequality follows by Hoeffding's inequality after observing that $\displaystyle \mathbb{E} P_{B_{\ell}}f_{\bm{\Theta}}=Pf_{\bm{\Theta}}$ and by Lemma \ref{lemma-bound-Psi}.
+\endgroup
+ We now turn to bounding the term \[ \sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)   - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg]. \] Appealing to Theorem 26.5 of \cite{shalev-shwartz_ben-david_2014}, for all $ \bTheta \in \mathscr{G}$, we have
+\begin{align}
+  &\frac{1}{L}\sum_{\ell \in \cL}   \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)- \E \left[\frac{1}{L}\sum_{\ell \in \cL}  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \right]\nonumber \\
+  &\le 2\E\left[\sup_{\bTheta \in \mathscr{G}}\frac{1}{L}\sum_{\ell \in \cL}\sigma_\ell  \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right) \right] + \delta.  \label{eq5}
+\end{align}
+with probability at least $1-2e^{-L\delta^2/2}$,
+where $\{\sigma_\ell\}_{\ell \in \mathcal{L}}$ are i.i.d. Rademacher random variables independent of the sample $\mathcal{X}$. Consider i.i.d. Rademacher random variables $\{\xi_i\}_{i=1}^n$ independent of  $\{\sigma_\ell\}_{\ell \in \mathcal{L}}$. As a consequence of equation \eqref{eq5}, we get,  
+\begingroup
+\allowdisplaybreaks
+\begin{align}
+     & \frac{1}{L}\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \bigg[ \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)  - \E \varphi\left(\frac{2(P-P_{B_\ell})f_{\bTheta}}{\epsilon}\right)\bigg] \nonumber\\
+     & \le \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}\sigma_\ell  (P-P_{B_\ell})f_{\bTheta} \right]+ \delta. \label{eq7} 
+     \end{align}
+     Equation \eqref{eq7} follows from the fact that $\varphi(\cdot)$ is 1-Lipschitz and Lemma 26.9 of \cite{shalev-shwartz_ben-david_2014}. We now consider random variables $\mathcal{X}^\prime=\{\bX_1^\prime, \dots, \bX_n^\prime\}$, which are i.i.d. and follow the law $P$. Equation \eqref{eq7} further yields
+     \begin{align}
+     = & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}\sigma_\ell  \E_{\mathcal{X}^\prime}\left((P^\prime_{B_\ell}-P_{B_\ell})f_{\bTheta}\right) \right]+ \delta \nonumber \\
+     \le & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}\sigma_\ell  (P^\prime_{B_\ell}-P_{B_\ell})f_{\bTheta} \right]+ \delta \nonumber \\
+     & \text{This inequality follows by employing Jensen's inequality as supremum is a convex function,}\nonumber\\ & \text{and the expectation in the second step is taken with respect to both the original sample $\mathcal{X}$}\nonumber\\ & \text{as well as the ghost sample $\mathcal{X}'$ and the Rademacher random variables $\{\sigma_{\ell}\}_{\ell\ge 1}$.}\nonumber\\
+     = & \frac{4}{L \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}\sigma_\ell  \frac{1}{b}\sum_{i \in B_\ell}(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \nonumber \\
+     = & \frac{4}{b L \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}\sigma_\ell  \sum_{i \in B_\ell} \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \label{eq8} \\
+     = & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}}\sum_{\ell \in \cL}  \sum_{i \in B_\ell} \sigma_\ell \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \nonumber \\
+     = & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i (f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \right]+ \delta \label{eq9} \\
+     \le &  \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i^\prime)+ \sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta\\
+     \le & \frac{4}{n \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i^\prime)\right]+\E\left[ \sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta\\
+     = & \frac{8}{n \epsilon}\E\left[\sup_{\bTheta \in \mathscr{G}} \sum_{i \in \J} \gamma_i f_{\bTheta}(\bX_i) \right]+ \delta \nonumber \\
+     \le & \frac{8}{n \epsilon} 48 \sqrt{\pi}  M^2  (Kp)^{3/2}  \sqrt{|\J|} + \delta \label{eq10} \\
+     \le & \frac{384}{n \epsilon}  \sqrt{\pi}  M^2  (Kp)^{3/2} \sqrt{|\I|} + \delta. \label{eq11}
+\end{align}
+\endgroup
+
+Here $\J$ is the set of observations in the partitions not containing an outlier. Equation \eqref{eq8} follows from the fact that  $(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i)) \overset{d}{=} \xi_i(f_{\bTheta}(\bX_i^\prime)-f_{\bTheta}(\bX_i))$ as $\{\xi_i\}_{i\ge 1}$ are Rademacher random variables independent of the sample $\mathcal{X}$. In equation \eqref{eq9}, $\{\gamma_i\}_{i \in \mathcal{J}}$ are independent Rademacher random variables since the product of two independent Rademacher random varibles is also a Rademacher random variable. Equation \eqref{eq10} follows by Theorem \ref{thm-1-RnF}.
+Thus, combining equations \eqref{eq5}, \eqref{eq7}, and \eqref{eq11}, we conclude that,  with probability of at least $1-2e^{-L \delta^2/2}$, 
+\begin{equation}
+    \sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \le  L \left( \exp\left\{-\frac{b \epsilon^2}{32  M^4 K^2 p^2}\right\}+ \frac{|\cO|}{L} + \frac{384}{n \epsilon}  \sqrt{\pi} M^2  (Kp)^{3/2} \sqrt{|\I|} + \delta\right). \label{eq12}
+\end{equation}
+We choose $\delta = \frac{2}{4+\eta} - \frac{|\cO|}{L}$, and $$\epsilon = \max\left\{\sqrt{32  M^4 \log\left(\frac{4(\eta+4)}{\eta}\right)}KpL^{1/2}n^{-1/2}, \frac{1536(\eta+4)  M^2 \sqrt{\pi}}{\eta} (Kp)^{3/2} |\I|^{1/2}n^{-1}\right\}.$$ This makes the right hand side of \eqref{eq12} strictly smaller than $\frac{L}{2}$.
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+%\nocite{langley00}
+Thus, we have shown that 
+\begin{align*}
+     \sP\left( \sup_{\bTheta \in \mathscr{G}} (Pf_{\bTheta} - \text{MoM}^n_L (f_{\bTheta}))> \epsilon \right) \le 2e^{-L \delta^2/2}.
+ \end{align*}
+% \begin{align*}
+%     &P\left( \sup_{\bTheta \in \mathscr{G}} (Pf_{\bTheta} - \text{MoM}^n_L (f_{\bTheta}))> \epsilon \right) \\
+%     & \le P\left(\sup_{\bTheta \in \mathscr{G}}\sum_{\ell = 1}^L \one\left\{(P-P_{B_\ell})f_{\bTheta} > \epsilon\right\} \ge L/2\right) \le e^{-2L \delta^2}.
+% \end{align*}
+By a similar argument, it follows that,
+\begin{align*}
+    \sP\left( \sup_{\bTheta \in \mathscr{G}} (\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} ) > \epsilon \right) \le 2e^{-L \delta^2/2}.
+\end{align*}
+From the two aforementioned inequalities, we obtain, 
+\[\sP\left( \sup_{\bTheta \in \mathscr{G}} |\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} | > \epsilon \right) \le 4e^{-L \delta^2/2}.\]
+i.e., with at least probability $1-4e^{-L \delta^2/2}$,
+\begin{align*}
+    & \sup_{\bTheta \in \mathscr{G}} |\text{MoM}^n_L (f_{\bTheta}) -Pf_{\bTheta} | \\
+    &\le \max\left\{\sqrt{32  M^4 \log\left(\frac{4(\eta+4)}{\eta}\right)}KpL^{1/2}n^{-1/2}, \frac{1536(\eta+4)  M^2 \sqrt{\pi}}{\eta} (Kp)^{3/2} |\I|^{1/2}n^{-1}\right\}\\
+    &\lesssim \max\left\{ KpL^{1/2}n^{-1/2}, (Kp)^{3/2}  |\I|^{1/2}n^{-1}\right\}.
+\end{align*}
+\end{proof}
+
+\subsection{Real Data Experiments}
+
+
+
+% \subsubsection{Further Experiments}
+
+For a comprehensive performance evaluation of our proposed clustering algorithm in situations where the underlying data distributions are unknown, we implement DP-MoM on several real datasets from the Compcancer database and the UCI Repository. Additionally, we implement some state-of-the-art clustering algorithms mentioned at the start of this section, on the same datasets, and compare the corresponding ARI values against that of DP-MoM. Since DP-MoM is a randomized algorithm in the sense that its cluster assignment is dependent on the initial dataset partitioning into buckets, we implement DP-MoM on each dataset $30$ times independently, and report the median ARI. The same procedure is followed while reporting the ARI values for the competing algorithms.
+
+\subsubsection{Friedman's Rank Test} 
+Friedman's rank test \cite{friedman} is employed to discern whether a significant difference exists in the performance of the algorithms applied to our datasets. This assessment unfolds across three stages. In the initial stage, the test encompasses all clustering algorithms under consideration. Moving to the second stage, the analysis omits DP-MoM while incorporating the other algorithms. In the third stage, both MoMPKM and DP-MoM are excluded from the test. The calculated p-values for these three stages are as follows: $1.57 \times 10^{-7}$, $0.0021$, and $0.0599$ respectively. The null hypothesis, which posits no significant variance in clustering accuracy among the tested algorithms, is rejected in the first and second stages, but accepted in the third stage. This outcome underscores that MoMPKM and DP-MoM emerge as the most proficient algorithms at our disposal. Further assessments indicate that MoMPKM is outperformed comprehensively by DP-MoM. 
+
+\subsubsection{Sign Test and Wilcoxon Signed Rank (WSR) Test}
+
+We also perform the \textit{Sign Test} and \textit{Wilcoxon Signed Rank Test} to compare our proposed algorithm individually with every other competing algorithm mentioned in Tables 1 and 2 and check whether DP-MoM performs significantly better than them. It is evident from the $p$-values that the null hypotheses: $H_{0s}:$ The said algorithm is better than DP-MoM (\textit{Sign Test}) and $H_{0w}:$ The said algorithm is equivalent to our proposed framework DP-MoM (\textit{Wilcoxon's signed Rank Test}) are rejected in favor of the alternative $H_1:$ DP-MoM performs significantly better than the other state-of-the-art clustering algorithm in question for a test with level of significance $0.01$. In a majority of the cases, our proposed DP-MoM algorithm is the standout performer. However, in the 3 cases where its performance is slightly suboptimal with respect to that of MoMPKM and OWL $k$-means, the results of the statistical tests presented in Table 3 in the Supplementary Material, indicate that this drop in performance is not statistically significant at the specified level.
+
+\begin{comment}
+\begin{table}[!htb]
+\renewcommand\theadfont{\bfseries}
+\centering
+\caption{Summary of the Statistical Test Results for level of significance $0.01$}
+\vskip 0.7em
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lccccccccccccc}
+\toprule
+\multirow[b]{2}{*}{\thead{\textbf{Clustering Algorithm}}}
+    &   \multicolumn{2}{c}{\thead{\textbf{Sign Test}}}
+        & \multicolumn{2}{c}{\thead{\textbf{WSR Test}}}
+             \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5} %\cmidrule(lr){11-13}
+% \toprule
+% & $\mathbf{n}$ & $\mathbf{d}$ & $\mathbf{K}$ & \thead{KM++} & \thead{DPM} & \thead{KMed} & \thead{PAM} & \thead{K-bMoM} & \\
+& \thead{Statistic} & \thead{\textit{\textbf{p}}-value}  & \thead{Statistic} & \thead{\textit{\textbf{p}}-value} 
+\\
+% \addlinespace
+\midrule
+\addlinespace
+$k$-means ++           & 15  & 0.0002594  & 135 & 0.0000305   \\
+Sparse $k$-means          & 15  & 0.0002594  & 135 & 0.0000305          \\
+$k$-medians           & 15  & 0.0002594  & 135 & 0.0000305         \\
+Partition Around Medoids        & 15  & 0.0002594  & 134 & 0.0000458 \\
+Robust Continuous Clustering           & 15  & 0.0002594  & 135 & 0.0000305 \\
+DP means       & 15  & 0.0002594  & 133 & 0.0000763 \\
+Kb MoM          & 15  & 0.0002594  & 135 & 0.0000305 \\
+MoM Power $k$-means & 15  & 0.0002594  & 135 & 0.0000305 \\
+OWL $k$-means & 14  & 0.0020900  & 125 & 0.0008392\\
+\addlinespace
+\bottomrule
+\end{tabular}
+}
+\label{table:statistical tests}
+\end{table}
+\end{comment}
+
+Tables 4 and 5 in the Supplementary Material provide the range of the penalty parameter $\lambda$ that enables us to cluster each dataset more efficiently. The predicted number of clusters are also displayed. Note that the number of clusters have been calculated after assigning the data points in the clusters containing less than $3$ observations, to the nearest cluster containing at least $3$ observations. 
+
+\begin{comment}
+\begin{table}[!htb]
+\renewcommand\theadfont{\bfseries}
+\centering
+\caption{Range of optimal $\lambda$ and estimated number of clusters for implementing DP-MoM on UCI datasets}
+\vskip 1em
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lcc}
+\toprule
+{\thead{\textbf{Dataset}}}
+    &   \multicolumn{1}{c}{\thead{\textbf{Range of Optimal $\lambda$}}}
+        & \multicolumn{1}{c}{{\textbf{Estimated Clusters}}}\\
+% \addlinespace
+\midrule
+\addlinespace
+Iris          & 5.129 - 6.535  & 3 \\
+Glass         & 4.207 - 18.841  &  6 \\
+WDBC           & 2.5$\times 10^6$ - 6$\times 10^6$  & 2 \\
+E. Coli       & 0.3008 - 0.3571  & 8 \\
+Wine         &  3.78$\times 10^5$ - 3.93$\times 10^5$ & 2 \\
+Thyroid       & 1769 - 2123  & 5 \\
+Zoo          & 7.048 - 10.360  & 6 \\
+soybean & 18.59 - 25.70  & 4 \\
+\addlinespace
+\bottomrule
+\end{tabular}
+}
+\label{table:lambda-uci}
+\end{table}
+
+
+\begin{table}[!htb]
+\renewcommand\theadfont{\bfseries}
+\centering
+\caption{Range of optimal $\lambda$ and estimated number of clusters for implementing DP-MoM on Compcancer datasets}
+\vskip 1em
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lcc}
+\toprule
+{\thead{\textbf{Dataset}}}
+    &   \multicolumn{1}{c}{\thead{\textbf{Range of Optimal $\lambda$}}}
+        & \multicolumn{1}{c}{\thead{\textbf{Estimated Clusters}}}\\
+% \addlinespace
+\midrule
+\addlinespace
+golub\_1999\_v2          & 2.48$\times 10^9$ - 3.05$\times 10^9$ & 3   \\
+west\_2001         & 1.77$\times 10^9$  - 3.11$\times 10^9$ &  2         \\
+pomeroy\_2002\_v2           & 2.94$\times 10^9$ - 4.70$\times 10^9$ & 4         \\
+singh\_2002       & 0.14$\times 10^9$ - 0.17$\times 10^9$ & 2 \\
+tomlins\_v2         &  175.6 - 308.0 & 2 \\
+alizadeh\_2000\_v1       & 762.8 - 780.0  & 2 \\
+armstrong\_2002\_v2          & 5.85$\times 10^9$ - 7.08$\times 10^9$ & 3 \\
+bredel\_2005 & 672.4 - 978.8  & 2 \\
+\addlinespace
+\bottomrule
+\end{tabular}
+}
+\label{table:lambda-compcancer}
+\end{table}
+\end{comment}
+
+\section{Discussion}
+
+In this article, we proposed a new clustering algorithm that tactfully integrates two major clustering paradigms, viz., centroid-based clustering and model-based clustering that is intended to perform  well on noisy or outlier-infested data. We utilize the Median-of-Means (MoM) estimator to deal with noise or outliers present in data, and a Bayesian non-parametric modelling ensures that the number of clusters need not be specified earlier. Unlike conventional clustering algorithms, which typically tackle only one of these challenges, our proposed algorithm adeptly tackles both at the same time. Following our comprehensive theoretical analysis of error rate bounds, augmented by extensive simulation studies and real-world data analysis, we showcase the superiority of our methods against some of the most prominent clustering techniques.
+
+
+
+
+\appendix
+
+\section*{Ethical Statement}
+
+There are no ethical issues.
+
+% \section*{Acknowledgments}
+
+% blah blah blah
+
+
+%% The file named.bst is a bibliography style file for BibTeX 0.99c
+\bibliographystyle{named}
+\bibliography{ijcai24}
+
+\end{document}
+

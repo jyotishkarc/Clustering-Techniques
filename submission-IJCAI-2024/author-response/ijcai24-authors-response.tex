@@ -1,0 +1,71 @@
+% IJCAI 2024 Author's response
+
+% Template file with author's response
+
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+\usepackage{ijcai24-authors-response}
+
+
+\usepackage{times}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\urlstyle{same}
+
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{xcolor}
+\newcommand{\jrc}[1]{\textcolor{blue}{[#1]}}
+
+\begin{document}
+
+% \noindent\fbox{
+% 	\parbox{\linewidth}{
+% 		{\bf IMPORTANT NOTE (YOU CAN DELETE IT AFTER READING)}
+
+% 		The response to the reviews {\bf cannot} include links to external resources. Your paper may be summarily rejected if you include such links in your response.
+
+% 		Furthermore, it {\bf must be one page-only} and use this template without altering fonts, font sizes, or margins.
+
+% 		In our experience, it is more efficient to focus on explicit questions asked in the reviews (especially those listed in the box ``Questions for the authors response'') than to enter into an argument with the reviewers about the significance/novelty of your results. However, feel free to use this space as you see fit, subject to the constraints above.
+% 	}
+% }
+
+\section*{Rebuttal}
+Sincere thanks to the reviewers for their constructive and overall positive feedback.\\
+\textbf{R1-Q1 (Upper bound on $K$):} The upper bound $K$ on the number of clusters is controlled using the penalty parameter $\lambda$. Typically, as $\lambda$ increases, points not very close to each other tend to be grouped into the same cluster, thereby making the value of $K$ shrink.\\
+\textbf{R1-Q2 (Choice of $b$ and $L$):} We usually choose $L\sim O(n)$ (and hence $b$, as $n=bL$), to robustify the algorithm. The idea arises from a breakdown point analysis of the MoM estimator, described in \textbf{R1-Q3}.\\
+\textbf{R1-Q3 (Breakdown point and Assumption A.5):} The breakdown point of the MoM estimator is $[(L-1)/2]/n$ as shown in Rodriguez \& Valdora (2019, Stat. Prob. Letters). In light of this, assumption A.5, requiring $|\mathcal{O}|$ to be less than half the number of partitions $L$, assumes that the MoM estimator and hence the centroid estimates do not break down. We promise to clarify this in the final version.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{R2-Q1 (Fixing number of clusters):} Fixing the number of clusters comes with the inherent issue of centroid initialization, which can severely affect the quality of clustering. Algorithms such as $k$-means++ mitigate this issue for a few cases but particularly fail in case of noisy or outlier-laden data. Using the $\lambda$ parameter, on the other hand, implies that we start with one cluster and initialize the global centroid (we have chosen the sample mean in this case). The sample mean, in spite of not being a robust estimator of the center, does not affect the quality of clustering even in the presence of outliers. This makes our approach superior to the one in which we run the algorithm fixing the value of $k$. Additionally, fixing different values of $k$ and performing the clustering task is a heuristic method that fails to work well in the presence of noisy data. This approach is computationally challenging too. Our method, on the other hand, particularly bypasses this issue through the flexibility induced by the $\lambda$ parameter.\\
+\textbf{R2-Q2 (Tuning $L$):} We resort to grid-searching in order to tune $L$ (See Supplementary Material). However, we can avoid this by choosing $L\sim O(n)$. This is because the breakdown point of the MoM estimator is $[(L-1)/2]/n$ (Kindly see \textbf{R1-Q3}), which implies that if $L=o(n)$, the centroid estimates would be highly non-robust for datasets with large $n$. Choosing $L\sim O(n)$ ensures that our algorithm is able to tolerate a certain amount of data contamination by outliers.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{R3-Q1 (Choice of \textit{AdaGrad}, ARI):} \textit{AdaGrad} performs well with data with sparse features, as it individually scales the learning rates (coefficient of $g_j^{(t)}$ in line 13 of Algorithm 1) for each parameter based on its past gradients. This can help avoid issues such as exploding or vanishing gradients commonly encountered with sparse data in other optimization algorithms. Hence, \textit{AdaGrad} is robust to significant variations in gradient magnitudes across different parameters. This can make it more suitable for optimization problems with non-uniform gradient distributions. As for the choice of the measure of clustering accuracy, we have used both ARI and NMI but have opted to report just one of these measures since they showed a high positive correlation (i.e., similar trend), and to simplify the readability of the paper. Per your suggestion, we shall also include NMI values in the final version.\\
+\textbf{R3-Q2 (Deviation in the ARI obtained over test runs):} 
+The standard deviation observed among the ARI for the various test runs was of the order of $10^{-2}$. To maintain readability, we opted not to include standard deviation in the tables to avoid cluttering the presentation.\\
+\textbf{R3-Q3 (Low-dimensionality of \textit{Jain} dataset):} We chose the dataset \textit{Jain} despite being 2D to visualize how well DP-MoM performs as compared to other state-of-the-art algorithms under noise. We are not claiming that DP-MoM should perform optimally for high-dimensional datasets. Rather, it is interesting to observe that DP-MoM continues to outperform its competitors even in such a situation, indicating that many features might not challenge our method's performance. On a different note, quite a few of the Compcancer datasets contained clusters with 1-3 data points. For all we know, these may be outlying observations that fail to affect DP-MoM's clustering efficiency significantly.\\
+\textbf{R3-Q4 (Assumptions for statistical tests, Citations):} %\textcolor{blue}{The only significant assumption for all the statistical tests employed is that for a given clustering algorithm, the observed ARI, which is a function of only the dataset, must be independent for each dataset. This is a standard practice. Since we have randomly selected a few from several available datasets, it is reasonable to treat them as independent, and thus, the ARI values will also be independent in principle, and the assumptions for all the tests are satisfied.} The $T$-test would be inappropriate in this situation as the underlying distribution must be normal to employ the $T$-test for a small sample. In this case, we cannot argue that the underlying distribution of the ARI values for any particular algorithm will be normal (or even unimodal). \jrc{Additionally, all the competing methods have been cited at the beginning of Section 5.}\\
+The key assumption for all statistical tests is that ARI values, specific to each dataset, are independent for a given clustering algorithm, a common practice. Random selection of datasets justifies treating them as independent, satisfying test assumptions. Note that, the $T$-test is suitable only if the ARI distribution is normal which may not be reasonable to assume. Hence, we chose non-parametric hypothesis tests to validate the statistical significance of our results. Additionally, competing methods are cited in the beginning of Section 5.\\
+\textbf{R3-Q5 (Cutoffs for the tests):} We performed Friedman's test with significance level $0.001$ and the Sign Test and Wilcoxon's Signed Rank Test with level $0.005$. We didn't mention it explicitly, but will surely clarify that appropriately.\\
+%The $p$-value is the probability of obtaining test results at least as extreme as the result actually observed under the assumption that the null hypothesis is correct. The $p$-values observed are very low for Friedman's test, indicating strong evidence against the respective null hypotheses. However, the first $p$-value is significantly smaller than the next two. For the level of significance $0.001$, the first null hypothesis is rejected. At the same time, the other two are accepted, indicating that the performance of DP-MoM is significantly better than the other algorithms. As for the sign test and the Wilcoxon signed rank test, all the null hypotheses are rejected at level 0.005, indicating that DP-MoM performs significantly better than each of the other state-of-the-art techniques.\\
+\textbf{R3-Q6 (Experimental Results):} In Tables 1 and 2, $p$ represents the number of features in a dataset. The average rank is representative of the relative performance (on average) of each algorithm with respect to their competitors and is used to conduct the Friedman's rank test. In Table 2, the ARI for RCC indeed comes out to be zero, indicating that RCC is unable to maintain its efficiency for high-dimensional datasets.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{R4-Q1 (Significance of Dirichlet process):} As stated in Kulis \& Jordan (2012, ICML), the concentration parameter is a function of $\rho$ and $\sigma$. If we update these in a Bayesian way, i.e., by assuming priors on $\rho$ and $\sigma$, the issue raised by Miller \& Harrison (2013, NeurIPS) can be mitigated, thanks to a recent result shown in Ascolani et al. (2023, Biometrika). We shall definitely include a discussion on this in the final version. Nevertheless, in practice, we have seen that DP-MoM seems to perform well on many datasets even without considering such a setting. On a different note, we plan on exploring the possibility of introducing a Poisson prior on the number of clusters in our future work.\\
+\textbf{R4-Q2 (Significance of MoM):} DP alone is able to handle outlier-laden data when the clusters are far apart. However, it appears to fall short when noisy observations are situated in between clusters that are not very far apart (Kindly refer to Figure 1). In such a situation, reducing $\lambda$ to get rid of noisy observations can impact the overall quality of clustering. MoM ensures that this doesn't happen, and in addition, it robustifies the centroid estimates.
+\end{document}
+
+
+
+
